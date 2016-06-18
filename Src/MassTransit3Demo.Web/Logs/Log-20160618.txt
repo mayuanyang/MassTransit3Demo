@@ -1,0 +1,17 @@
+﻿2016-06-18 14:56:22.370 +10:00 [Debug] Exception logger middleware
+2016-06-18 14:56:50.280 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:00:33.292 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:04:27.491 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:06:45.566 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:08:43.711 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:09:09.388 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:10:40.985 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:10:50.764 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:12:52.085 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:14:07.506 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:15:05.520 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:15:07.870 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:15:10.010 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:19:49.285 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:27:37.660 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:27:44.759 +10:00 [Debug] Exception logger middleware

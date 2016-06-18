@@ -1,0 +1,5 @@
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Messages\bin\Debug\MassTransit3Demo.Messages.dll
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Messages\bin\Debug\MassTransit3Demo.Messages.pdb
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Messages\obj\Debug\MassTransit3Demo.Messages.csprojResolveAssemblyReference.cache
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Messages\obj\Debug\MassTransit3Demo.Messages.dll
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Messages\obj\Debug\MassTransit3Demo.Messages.pdb

@@ -1,0 +1,74 @@
+﻿2016-06-18 14:56:21.988 +10:00 [Debug] Beginning operation 14e2b314-3434-4156-ab62-d1c206206129: "Time for handling message"
+2016-06-18 14:56:22.076 +10:00 [Debug] Exception logger middleware
+2016-06-18 14:56:22.267 +10:00 [Debug] Completed operation 14e2b314-3434-4156-ab62-d1c206206129: "Time for handling message" in 00:00:00.1938651 (193 ms)
+2016-06-18 14:56:50.275 +10:00 [Debug] Beginning operation 47572b8b-1562-4a11-8348-af59487b7bcb: "Time for handling message"
+2016-06-18 14:56:50.275 +10:00 [Debug] Exception logger middleware
+2016-06-18 14:56:50.279 +10:00 [Debug] Completed operation 47572b8b-1562-4a11-8348-af59487b7bcb: "Time for handling message" in 00:00:00.0037039 (3 ms)
+2016-06-18 15:00:32.938 +10:00 [Debug] Beginning operation 3200e9b8-5be1-4c64-9f43-1bf09ec585d6: "Time for handling message"
+2016-06-18 15:00:32.972 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:00:33.179 +10:00 [Debug] Completed operation 3200e9b8-5be1-4c64-9f43-1bf09ec585d6: "Time for handling message" in 00:00:00.2084301 (208 ms)
+2016-06-18 15:04:27.154 +10:00 [Debug] Beginning operation b3b359d2-32a7-45e6-a5cc-b62b3e1c5a62: "Time for handling message"
+2016-06-18 15:04:27.188 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:04:27.393 +10:00 [Debug] Completed operation b3b359d2-32a7-45e6-a5cc-b62b3e1c5a62: "Time for handling message" in 00:00:00.2067640 (206 ms)
+2016-06-18 15:06:45.220 +10:00 [Debug] Beginning operation eddf4234-bdce-4e4a-9b37-ab457f95dba4: "Time for handling message"
+2016-06-18 15:06:45.249 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:06:45.466 +10:00 [Debug] Completed operation eddf4234-bdce-4e4a-9b37-ab457f95dba4: "Time for handling message" in 00:00:00.2186365 (218 ms)
+2016-06-18 15:08:43.702 +10:00 [Debug] Beginning operation 47805d65-44f6-4985-9537-9a81a507522c: "Time for handling message"
+2016-06-18 15:08:43.702 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:08:43.711 +10:00 [Debug] Completed operation 47805d65-44f6-4985-9537-9a81a507522c: "Time for handling message" in 00:00:00.0080830 (8 ms)
+2016-06-18 15:09:09.380 +10:00 [Debug] Beginning operation 7ea2b16b-fecd-4c02-ba66-604e4e0c0518: "Time for handling message"
+2016-06-18 15:09:09.380 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:09:09.384 +10:00 [Debug] Completed operation 7ea2b16b-fecd-4c02-ba66-604e4e0c0518: "Time for handling message" in 00:00:00.0041525 (4 ms)
+2016-06-18 15:10:40.974 +10:00 [Debug] Beginning operation 4aa2aaff-1b98-4c23-9ed1-a47e0654b759: "Time for handling message"
+2016-06-18 15:10:40.975 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:10:40.985 +10:00 [Debug] Completed operation 4aa2aaff-1b98-4c23-9ed1-a47e0654b759: "Time for handling message" in 00:00:00.0107802 (10 ms)
+2016-06-18 15:10:50.753 +10:00 [Debug] Beginning operation cc4286cb-46f1-40a8-b512-b7d8856f1cc0: "Time for handling message"
+2016-06-18 15:10:50.753 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:10:50.764 +10:00 [Debug] Completed operation cc4286cb-46f1-40a8-b512-b7d8856f1cc0: "Time for handling message" in 00:00:00.0101721 (10 ms)
+2016-06-18 15:12:51.735 +10:00 [Debug] Beginning operation ef581709-3a42-46d7-a3d7-7d7dcfad8674: "Time for handling message"
+2016-06-18 15:12:51.775 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:12:51.998 +10:00 [Debug] Completed operation ef581709-3a42-46d7-a3d7-7d7dcfad8674: "Time for handling message" in 00:00:00.2250547 (225 ms)
+2016-06-18 15:14:07.105 +10:00 [Debug] Beginning operation 37fa0782-ecb2-47d7-893a-89fdc9cd5634: "Time for handling message"
+2016-06-18 15:14:07.151 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:14:07.401 +10:00 [Debug] Completed operation 37fa0782-ecb2-47d7-893a-89fdc9cd5634: "Time for handling message" in 00:00:00.2532067 (253 ms)
+2016-06-18 15:15:05.517 +10:00 [Debug] Beginning operation 398fbf9e-0e60-43de-95e3-43b4f8abb32e: "Time for handling message"
+2016-06-18 15:15:05.517 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:15:05.521 +10:00 [Debug] Completed operation 398fbf9e-0e60-43de-95e3-43b4f8abb32e: "Time for handling message" in 00:00:00.0047666 (4 ms)
+2016-06-18 15:15:07.867 +10:00 [Debug] Beginning operation 55fcb353-9446-47a4-8be0-c1546c2e69fc: "Time for handling message"
+2016-06-18 15:15:07.867 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:15:07.870 +10:00 [Debug] Completed operation 55fcb353-9446-47a4-8be0-c1546c2e69fc: "Time for handling message" in 00:00:00.0023585 (2 ms)
+2016-06-18 15:15:10.007 +10:00 [Debug] Beginning operation d414b4c1-0cb1-43ec-bae9-51511b3ca667: "Time for handling message"
+2016-06-18 15:15:10.007 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:15:10.009 +10:00 [Debug] Completed operation d414b4c1-0cb1-43ec-bae9-51511b3ca667: "Time for handling message" in 00:00:00.0023260 (2 ms)
+2016-06-18 15:19:49.277 +10:00 [Debug] Beginning operation 8a2ef3d0-48a5-4305-a238-a3835a0a3edc: "Time for handling message"
+2016-06-18 15:19:49.277 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:19:49.285 +10:00 [Debug] Completed operation 8a2ef3d0-48a5-4305-a238-a3835a0a3edc: "Time for handling message" in 00:00:00.0074249 (7 ms)
+2016-06-18 15:22:56.326 +10:00 [Debug] Beginning operation 133461f2-3abb-4f27-b604-d2058bd9dfea: "Time for handling message"
+2016-06-18 15:22:56.370 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:22:56.504 +10:00 [Debug] Completed operation 133461f2-3abb-4f27-b604-d2058bd9dfea: "Time for handling message" in 00:00:00.1367798 (136 ms)
+2016-06-18 15:24:55.679 +10:00 [Debug] Beginning operation 2c79bccf-42af-4f7e-b3a8-f6e0edf7747b: "Time for handling message"
+2016-06-18 15:24:55.727 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:24:55.850 +10:00 [Debug] Completed operation 2c79bccf-42af-4f7e-b3a8-f6e0edf7747b: "Time for handling message" in 00:00:00.1268415 (126 ms)
+2016-06-18 15:25:07.532 +10:00 [Debug] Beginning operation 843f2010-3d3e-4470-9b0b-7f527ab062d1: "Time for handling message"
+2016-06-18 15:25:07.532 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:25:07.533 +10:00 [Debug] Completed operation 843f2010-3d3e-4470-9b0b-7f527ab062d1: "Time for handling message" in 00:00:00.0003215 (0 ms)
+2016-06-18 15:25:11.604 +10:00 [Debug] Beginning operation cb1d1186-eb37-41f9-920d-0c416a88f565: "Time for handling message"
+2016-06-18 15:25:11.604 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:25:11.605 +10:00 [Debug] Completed operation cb1d1186-eb37-41f9-920d-0c416a88f565: "Time for handling message" in 00:00:00.0002621 (0 ms)
+2016-06-18 15:27:37.358 +10:00 [Debug] Beginning operation 5dbdb5e1-3834-422c-8c3c-d24773d56ccf: "Time for handling message"
+2016-06-18 15:27:37.389 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:27:37.573 +10:00 [Debug] Completed operation 5dbdb5e1-3834-422c-8c3c-d24773d56ccf: "Time for handling message" in 00:00:00.1859710 (185 ms)
+2016-06-18 15:27:44.755 +10:00 [Debug] Beginning operation 6a6de686-ffe6-4578-b611-50af8eae3fda: "Time for handling message"
+2016-06-18 15:27:44.755 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:27:44.758 +10:00 [Debug] Completed operation 6a6de686-ffe6-4578-b611-50af8eae3fda: "Time for handling message" in 00:00:00.0030436 (3 ms)
+2016-06-18 15:27:52.299 +10:00 [Debug] Beginning operation d9dd6de3-af7d-44fb-be7b-91957409e4b9: "Time for handling message"
+2016-06-18 15:27:52.299 +10:00 [Debug] Exception logger middleware
+2016-06-18 15:27:52.302 +10:00 [Debug] Completed operation d9dd6de3-af7d-44fb-be7b-91957409e4b9: "Time for handling message" in 00:00:00.0031958 (3 ms)
+2016-06-18 21:44:46.851 +10:00 [Debug] Beginning operation ed495c26-efec-4b16-9042-871928875c24: "Time for handling message"
+2016-06-18 21:44:47.083 +10:00 [Debug] Completed operation ed495c26-efec-4b16-9042-871928875c24: "Time for handling message" in 00:00:00.1929974 (192 ms)
+2016-06-18 21:45:06.783 +10:00 [Debug] Beginning operation beb653cd-35e4-4c44-892e-a0c1be32c89d: "Time for handling message"
+2016-06-18 21:45:06.787 +10:00 [Debug] Completed operation beb653cd-35e4-4c44-892e-a0c1be32c89d: "Time for handling message" in 00:00:00.0039887 (3 ms)
+2016-06-18 21:46:35.418 +10:00 [Debug] Beginning operation 8f959bf6-afba-4c07-b0a7-55375866a5da: "Time for handling message"
+2016-06-18 21:46:35.640 +10:00 [Debug] Completed operation 8f959bf6-afba-4c07-b0a7-55375866a5da: "Time for handling message" in 00:00:00.1931898 (193 ms)
+2016-06-18 21:46:40.187 +10:00 [Debug] Beginning operation ef05c940-69af-4b4b-890c-d5835ec4f422: "Time for handling message"
+2016-06-18 21:46:40.191 +10:00 [Debug] Completed operation ef05c940-69af-4b4b-890c-d5835ec4f422: "Time for handling message" in 00:00:00.0038963 (3 ms)

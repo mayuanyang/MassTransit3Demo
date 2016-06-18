@@ -1,0 +1,746 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SerilogMetrics</name>
+    </assembly>
+    <members>
+        <member name="T:Serilog.LoggerExtensions">
+            <summary>
+            Extends <see cref="T:Serilog.LoggerConfiguration"/> to add Full .NET Framework 
+            capabilities.
+            </summary>
+        </member>
+        <member name="F:Serilog.LoggerExtensions.DefaultGaugeTemplate">
+            <summary>
+            The default gauge template.
+            </summary>
+        </member>
+        <member name="F:Serilog.LoggerExtensions.DefaultCountTemplate">
+            <summary>
+            The default count template.
+            </summary>
+        </member>
+        <member name="F:Serilog.LoggerExtensions.DefaultResolutionCountTemplate">
+            <summary>
+            The default count template.
+            </summary>
+        </member>
+        <member name="F:Serilog.LoggerExtensions.DefaultMeterTemplate">
+            <summary>
+            The default meter template.
+            </summary>
+        </member>
+        <member name="F:Serilog.LoggerExtensions.DefaultHealthTemplate">
+            <summary>
+            The default health template.
+            </summary>
+        </member>
+        <member name="M:Serilog.LoggerExtensions.BeginTimedOperation(Serilog.ILogger,System.String,System.String,Serilog.Events.LogEventLevel,System.Nullable{System.TimeSpan},Serilog.Events.LogEventLevel,System.String,System.String,System.String,System.Object[])">
+            <summary>
+            Begins an operation by placing the code to be timed inside a using block. 
+            When the block is being exited, the time it took is logged.
+            
+            In addition you can specify a warning limit. If it takes more time to execute the code than the specified limit, another message will be logged.
+            </summary>
+            <param name="logger">The logger.</param>
+            <param name="identifier">The identifier used for the timing. If non specified, a random guid will be used.</param>
+            <param name="description">A description for this operation.</param>
+            <param name="level">The level used to write the timing operation details to the log. By default this is the information level.</param>
+            <param name="warnIfExceeds">Specifies a limit, if it takes more than this limit, the level will be set to warning. By default this is not used.</param>
+            <param name = "levelExceeds">The level used when the timed operation exceeds the limit set. By default this is Warning.</param>
+            <param name = "beginningMessage">Template used to indicate the begin of a timed operation. By default it uses the BeginningOperationTemplate.</param>
+            <param name = "completedMessage">Template used to indicate the completion of a timed operation. By default it uses the CompletedOperationTemplate.</param>
+            <param name = "exceededOperationMessage">Template used to indicate the exceeding of an operation. By default it uses the OperationExceededTemlate.</param>
+            <param name = "propertyValues">Additional values to be logged along side the timing data.</param>
+            <returns>A disposable object. Wrap this inside a using block so the dispose can be called to stop the timing.</returns>
+            <example>
+            See the example how to wrap 
+            <code>
+            using (logger.BeginTimedOperation("Time a thread sleep for 2 seconds."))
+            {
+             	Thread.Sleep(2000);
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:Serilog.LoggerExtensions.GaugeOperation``1(Serilog.ILogger,System.String,System.String,System.Func{``0},Serilog.Events.LogEventLevel,System.String)">
+             <summary>
+             Retrieves a value as defined by the operation. For example the number of items inside a queue.
+             Call the Write() method to actually read the value and write to log.
+             </summary>
+             <example>
+             Create a gauge to measure the number of items in a queue.
+             <code>
+               var gauge = logger.GaugeOperation("queue", "item(s)", () => queue.Count());
+            
+               gauge.Write();
+            
+               queue.Enqueue(20);
+            
+               gauge.Write();
+             </code>
+             </example>
+             <param name="logger">The logger.</param>
+             <param name="name">The name of the counter, for example 'Queue size'.</param>
+             <param name="uom">The unit of measure, for example 'items'.</param>
+             <param name="operation">The actual function to retrieve the value from.</param>
+             <param name="level">The level used to write the timing operation details to the log. By default this is the information level.</param>
+             <param name="template">A message template describing the format used to write to the log.</param>
+             <typeparam name="T"></typeparam>
+             <returns>Returns a IGaugeMeasure on which you can call the Write() function to output to the log.</returns>
+        </member>
+        <member name="M:Serilog.LoggerExtensions.CountOperation(Serilog.ILogger,System.String,System.String,System.Boolean,Serilog.Events.LogEventLevel,System.String,System.Nullable{System.Int32})">
+            <summary>
+            Creates a new counter which can be used to increment or decrement a long value. 
+            </summary>
+            <example>
+            Create a new counter and increment the value.
+            <code>
+               var counter = logger.CountOperation("counter", "operation(s)", true, LogEventLevel.Debug);
+               counter.Increment();
+            </code>
+            </example>
+            <param name="logger">The logger.</param>
+            <param name="name">The name of the counter, for example 'Page visits'.</param>
+            <param name="uom">The unit of measure, for example 'hits'.</param>
+            <param name="directWrite">Indicates if a change in the counter needs to be written to the log directly. By default enabled. When disabled, you need to explicitly call the Write() method to output the current value.</param>
+            <param name="level">The level used to write the timing operation details to the log. By default this is the information level.</param>
+            <param name="template">A message template describing the format used to write to the log.</param>
+            <param name="resolution">Number of calls to Increment or Decrement before writing an event to the log</param>
+            <returns></returns>
+        </member>
+        <member name="M:Serilog.LoggerExtensions.MeterOperation(Serilog.ILogger,System.String,System.String,SerilogMetrics.TimeUnit,Serilog.Events.LogEventLevel,System.String)">
+            <summary>
+            Creates a new meter operations that measures the rate at which the operation occurs.
+            </summary>
+            <param name="logger">The logger</param>
+            <param name="name">Name of the meter.</param>
+            <param name="measuring">Specifies what it is measuring, like the number of requests</param>
+            <param name="rateUnit">The rate unit</param>
+            <param name="level">The loglevel to use when writing to the log.</param>
+            <param name="template">The template to use.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Serilog.LoggerExtensions.HealthCheck(Serilog.ILogger,System.String,System.Func{SerilogMetrics.HealthCheckResult},Serilog.Events.LogEventLevel,Serilog.Events.LogEventLevel,System.String)">
+            <summary>
+            Creates a new health check. When the Write method is executed, the health function is run and the response is written to the logger. 
+            </summary>
+            <returns>The check.</returns>
+            <param name="logger">Logger.</param>
+            <param name="name">Name of the health check.</param>
+            <param name="healthFunction">Health function to execute.</param>
+            <param name="healthyLevel">Healthy level used when the check was succesful.</param>
+            <param name="unHealthyLevel">Unhealthy level used when the check was unsuccessful.</param>
+            <param name="template">Template to use to render the message to the log.</param>
+        </member>
+        <member name="T:SerilogMetrics.AtomicLong">
+            <summary>
+            Provides lock-free atomic read/write utility for a <c>long</c> value. The atomic classes found in this package
+            were are meant to replicate the <c>java.util.concurrent.atomic</c> package in Java by Doug Lea. The two main differences
+            are implicit casting back to the <c>long</c> data type, and the use of a non-volatile inner variable.
+            
+            <para>The internals of these classes contain wrapped usage of the <c>System.Threading.Interlocked</c> class, which is how
+            we are able to provide atomic operation without the use of locks. </para>
+            </summary>
+            <remarks>
+            It's also important to note that <c>++</c> and <c>--</c> are never atomic, and one of the main reasons this class is 
+            needed. I don't believe its possible to overload these operators in a way that is autonomous.
+            </remarks>
+            author Matt Bolt
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.#ctor">
+            <summary>
+            Creates a new <c>AtomicLong</c> instance with an initial value of <c>0</c>.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.#ctor(System.Int64)">
+            <summary>
+            Creates a new <c>AtomicLong</c> instance with the initial value provided.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.Get">
+            <summary>
+            This method returns the current value.
+            </summary>
+            <returns>
+            The <c>long</c> value accessed atomically.
+            </returns>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.Set(System.Int64)">
+            <summary>
+            This method sets the current value atomically.
+            </summary>
+            <param name="value">
+            The new value to set.
+            </param>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.GetAndSet(System.Int64)">
+            <summary>
+            This method atomically sets the value and returns the original value.
+            </summary>
+            <param name="value">
+            The new value.
+            </param>
+            <returns>
+            The value before setting to the new value.
+            </returns>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.CompareAndSet(System.Int64,System.Int64)">
+            <summary>
+            Atomically sets the value to the given updated value if the current value <c>==</c> the expected value.
+            </summary>
+            <param name="expected">
+            The value to compare against.
+            </param>
+            <param name="result">
+            The value to set if the value is equal to the <c>expected</c> value.
+            </param>
+            <returns>
+            <c>true</c> if the comparison and set was successful. A <c>false</c> indicates the comparison failed.
+            </returns>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.AddAndGet(System.Int64)">
+            <summary>
+            Atomically adds the given value to the current value.
+            </summary>
+            <param name="delta">
+            The value to add.
+            </param>
+            <returns>
+            The updated value.
+            </returns>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.GetAndAdd(System.Int64)">
+            <summary>
+            This method atomically adds a <c>delta</c> the value and returns the original value.
+            </summary>
+            <param name="delta">
+            The value to add to the existing value.
+            </param>
+            <returns>
+            The value before adding the delta.
+            </returns>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.Increment">
+            <summary>
+            This method increments the value by 1 and returns the previous value. This is the atomic 
+            version of post-increment.
+            </summary>
+            <returns>
+            The value before incrementing.
+            </returns>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.Decrement">
+            <summary>
+            This method decrements the value by 1 and returns the previous value. This is the atomic 
+            version of post-decrement.
+            </summary>
+            <returns>
+            The value before decrementing.
+            </returns>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.PreIncrement">
+            <summary>
+            This method increments the value by 1 and returns the new value. This is the atomic version 
+            of pre-increment.
+            </summary>
+            <returns>
+            The value after incrementing.
+            </returns>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.PreDecrement">
+            <summary>
+            This method decrements the value by 1 and returns the new value. This is the atomic version 
+            of pre-decrement.
+            </summary>
+            <returns>
+            The value after decrementing.
+            </returns>
+        </member>
+        <member name="M:SerilogMetrics.AtomicLong.op_Implicit(SerilogMetrics.AtomicLong)~System.Int64">
+            <summary>
+            This operator allows an implicit cast from <c>AtomicLong</c> to <c>long</c>.
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.CounterMeasure">
+            <summary>
+            Counter measure.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.CounterMeasure.#ctor(Serilog.ILogger,System.String,System.String,Serilog.Events.LogEventLevel,System.String,System.Boolean,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SerilogMetrics.CounterMeasure"/> class.
+            </summary>
+            <param name="logger">The logger.</param>
+            <param name="name">The name.</param>
+            <param name="counts">The counts.</param>
+            <param name="level">The level.</param>
+            <param name="template">The template.</param>
+            <param name="directWrite">if set to <c>true</c> then directly write to the log.</param>
+            <param name="resolution">Number of calls to Increment or Decrement before writing an event to the log</param>
+        </member>
+        <member name="M:SerilogMetrics.CounterMeasure.Increment">
+            <summary>
+            Increments the counter.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.CounterMeasure.Decrement">
+            <summary>
+            Decrements the counter.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.CounterMeasure.Reset">
+            <summary>
+            Resets the counter back to zero.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.CounterMeasure.Write">
+            <summary>
+            Write the measurement data to the log system.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.CounterMeasure.Value">
+            <summary>
+            Retrieves the current value.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.CounterMeasure.Interation">
+            <summary>
+            Retrieves the current iteration
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SerilogMetrics.GaugeMeasure`1">
+            <summary>
+            Gauge measure.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.GaugeMeasure`1.#ctor(Serilog.ILogger,System.String,System.String,System.Func{`0},Serilog.Events.LogEventLevel,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SerilogMetrics.GaugeMeasure`1"/> class.
+            </summary>
+            <param name="logger">The logger.</param>
+            <param name="name">The name.</param>
+            <param name="gauges">The gauges.</param>
+            <param name="operation">The operation.</param>
+            <param name="level">The level.</param>
+            <param name="template">The template.</param>
+        </member>
+        <member name="M:SerilogMetrics.GaugeMeasure`1.Write">
+            <summary>
+            Write the measurement data to the log system.
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.ICounterMeasure">
+            <summary>
+            Provides a counter which allow increments and decrements. 
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.ICounterMeasure.Increment">
+            <summary>
+            Increments the counter.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.ICounterMeasure.Decrement">
+            <summary>
+            Decrements the counter.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.ICounterMeasure.Reset">
+            <summary>
+            Resets the counter back to zero.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.ICounterMeasure.Value">
+            <summary>
+            Retrieves the current value.
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.IGaugeMeasure">
+            <summary>
+            Measures an operation.
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.IMeasure">
+            <summary>
+            Common measure interface.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.IMeasure.Write">
+            <summary>
+            Write the measurement data to the log system.
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.TimedOperation">
+            <summary>
+            Timed operation.
+            </summary>
+        </member>
+        <member name="F:SerilogMetrics.TimedOperation.BeginningOperationTemplate">
+            <summary>
+            The beginning operation template.
+            </summary>
+        </member>
+        <member name="F:SerilogMetrics.TimedOperation.CompletedOperationTemplate">
+            <summary>
+            The completed operation template.
+            </summary>
+        </member>
+        <member name="F:SerilogMetrics.TimedOperation.OperationExceededTemplate">
+            <summary>
+            The operation exceeded template.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.TimedOperation.#ctor(Serilog.ILogger,Serilog.Events.LogEventLevel,System.Nullable{System.TimeSpan},System.Object,System.String,Serilog.Events.LogEventLevel,System.String,System.String,System.String,System.Object[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:SerilogMetrics.TimedOperation" /> class.
+            </summary>
+            <param name="logger">The logger.</param>
+            <param name="identifier">The identifier used for the timing. If non specified, a random guid will be used.</param>
+            <param name="description">A description for the operation.</param>
+            <param name="level">The level used to write the timing operation details to the logger. By default this is the information level.</param>
+            <param name="warnIfExceeds">Specifies a limit, if it takes more than this limit, the level will be set to warning. By default this is not used.</param>
+            <param name = "levelExceeds">The level used when the timed operation exceeds the limit set. By default this is Warning.</param>
+            <param name = "beginningMessage">Template used to indicate the begin of a timed operation. By default it uses the BeginningOperationTemplate.</param>
+            <param name = "completedMessage">Template used to indicate the completion of a timed operation. By default it uses the CompletedOperationTemplate.</param>
+            <param name = "exceededOperationMessage">Template used to indicate the exceeding of an operation. By default it uses the OperationExceededTemlate.</param>
+            <param name = "propertyValues">Additional values to be logged along side the timing data.</param>
+        </member>
+        <member name="M:SerilogMetrics.TimedOperation.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.TimedOperation.GeneratePropertyBag(System.Object[])">
+            <summary>
+            Generates the property bag by combining parameter values with the timed operation values.
+            </summary>
+            <returns>The property bag with the combined values.</returns>
+            <param name="values">Values.</param>
+        </member>
+        <member name="T:SerilogMetrics.HealthCheckResult">
+            <summary>
+            The result data of a health check.</summary>
+        </member>
+        <member name="M:SerilogMetrics.HealthCheckResult.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SerilogMetrics.HealthCheckResult"/> class.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.HealthCheckResult.#ctor(System.Boolean,System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SerilogMetrics.HealthCheckResult"/> class.
+            </summary>
+            <param name="isHealthy">If set to <c>true</c> is healthy.</param>
+            <param name="message">Message.</param>
+            <param name="exception">Exception.</param>
+        </member>
+        <member name="M:SerilogMetrics.HealthCheckResult.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SerilogMetrics.HealthCheckResult"/> class.
+            </summary>
+            <param name="message">Message.</param>
+        </member>
+        <member name="M:SerilogMetrics.HealthCheckResult.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SerilogMetrics.HealthCheckResult"/> class.
+            </summary>
+            <param name="message">Message.</param>
+            <param name="exception">Exception.</param>
+        </member>
+        <member name="P:SerilogMetrics.HealthCheckResult.Message">
+            <summary>
+            Message of the result.
+            </summary>
+            <value>The message.</value>
+        </member>
+        <member name="P:SerilogMetrics.HealthCheckResult.Exception">
+            <summary>
+            A possible exception.
+            </summary>
+            <value>The exception.</value>
+        </member>
+        <member name="P:SerilogMetrics.HealthCheckResult.IsHealthty">
+            <summary>
+            Indicates if the result of the check is indeed healthy or not.
+            </summary>
+            <value><c>true</c> if this instance is healthty; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:SerilogMetrics.HealthMeasure">
+            <summary>
+            Health measure.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.HealthMeasure.#ctor(Serilog.ILogger,System.String,System.Func{SerilogMetrics.HealthCheckResult},Serilog.Events.LogEventLevel,Serilog.Events.LogEventLevel,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SerilogMetrics.HealthMeasure"/> class.
+            </summary>
+            <param name="logger">Logger.</param>
+            <param name="name">Name.</param>
+            <param name="healthFunction">Health function.</param>
+            <param name="healthyLevel">Healthy level.</param>
+            <param name="unHealthyLevel">Un healthy level.</param>
+            <param name="template">Template.</param>
+        </member>
+        <member name="M:SerilogMetrics.HealthMeasure.Write">
+            <summary>
+            Write the measurement data to the log system.
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.IHealthMeasure">
+            <summary>
+            Executes a heath check and reports the effect of it. 
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.IMeterMeasure">
+            <summary>
+            Measures a metered operation.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.IMeterMeasure.Mark(System.Int64)">
+            <summary>
+            Marks the occurrence of an operation.
+            </summary>
+        </member>
+        <member name="P:SerilogMetrics.IMeterMeasure.Count">
+            <summary>
+             Returns the total number of events which have been marked.
+            </summary>
+            <value>The total number.</value>
+        </member>
+        <member name="T:SerilogMetrics.MeterMeasure">
+            <summary>
+            Meter measure.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.MeterMeasure.#ctor(Serilog.ILogger,System.String,System.String,SerilogMetrics.TimeUnit,Serilog.Events.LogEventLevel,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SerilogMetrics.MeterMeasure"/> class.
+            </summary>
+            <param name="logger">Logger.</param>
+            <param name="name">Name.</param>
+            <param name="measuring">Measuring.</param>
+            <param name="rateUnit">Rate unit.</param>
+            <param name="level">Level.</param>
+            <param name="template">Template.</param>
+        </member>
+        <member name="M:SerilogMetrics.MeterMeasure.Mark(System.Int64)">
+            <summary>
+            Marks the occurrence of an operation.
+            </summary>
+            <param name="n">N.</param>
+        </member>
+        <member name="M:SerilogMetrics.MeterMeasure.Dispose">
+            <summary>
+            Releases all resource used by the <see cref="T:SerilogMetrics.MeterMeasure"/> object.
+            </summary>
+            <remarks>Call <see cref="M:SerilogMetrics.MeterMeasure.Dispose"/> when you are finished using the <see cref="T:SerilogMetrics.MeterMeasure"/>. The
+            <see cref="M:SerilogMetrics.MeterMeasure.Dispose"/> method leaves the <see cref="T:SerilogMetrics.MeterMeasure"/> in an unusable state.
+            After calling <see cref="M:SerilogMetrics.MeterMeasure.Dispose"/>, you must release all references to the
+            <see cref="T:SerilogMetrics.MeterMeasure"/> so the garbage collector can reclaim the memory that the
+            <see cref="T:SerilogMetrics.MeterMeasure"/> was occupying.</remarks>
+        </member>
+        <member name="P:SerilogMetrics.MeterMeasure.Count">
+            <summary>
+             Returns the total number of events which have been marked.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SerilogMetrics.MeterMeasure.Write">
+            <summary>
+            Write the measurement data to the log system.
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.Rate">
+            <summary>
+              Describes the rate.
+            </summary>
+        </member>
+        <member name="P:SerilogMetrics.Rate.Value">
+            <summary>
+            The actual value
+            </summary>
+        </member>
+        <member name="P:SerilogMetrics.Rate.MeterType">
+            <summary>
+            What are we measuring
+            </summary>
+        </member>
+        <member name="P:SerilogMetrics.Rate.TimeUnit">
+            <summary>
+            Unit of time
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.Rate.ToString">
+            <summary>
+            Returns a formatted representation.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SerilogMetrics.TimeUnit">
+            <summary>
+            Provides support for timing values
+            <see href="http://download.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html"/>
+            </summary>
+        </member>
+        <member name="F:SerilogMetrics.TimeUnit.Nanoseconds">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SerilogMetrics.TimeUnit.Microseconds">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SerilogMetrics.TimeUnit.Milliseconds">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SerilogMetrics.TimeUnit.Seconds">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SerilogMetrics.TimeUnit.Minutes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SerilogMetrics.TimeUnit.Hours">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:SerilogMetrics.TimeUnit.Days">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.VolatileDouble">
+            <summary>
+            Provides support for volatile operations around a <see cref="T:System.Double" /> value
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.EWMA">
+            <summary>
+             An exponentially-weighted moving average
+            </summary>
+            <see href="http://www.teamquest.com/pdfs/whitepaper/ldavg1.pdf"/>
+            <see href="http://www.teamquest.com/pdfs/whitepaper/ldavg2.pdf" />
+        </member>
+        <member name="M:SerilogMetrics.EWMA.OneMinuteEWMA">
+            <summary>
+            Creates a new EWMA which is equivalent to the UNIX one minute load average and which expects to be ticked every 5 seconds.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.EWMA.FiveMinuteEWMA">
+            <summary>
+            Creates a new EWMA which is equivalent to the UNIX five minute load average and which expects to be ticked every 5 seconds.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SerilogMetrics.EWMA.FifteenMinuteEWMA">
+            <summary>
+             Creates a new EWMA which is equivalent to the UNIX fifteen minute load average and which expects to be ticked every 5 seconds.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SerilogMetrics.EWMA.#ctor(System.Double,System.Int64,SerilogMetrics.TimeUnit)">
+            <summary>
+            Create a new EWMA with a specific smoothing constant.
+            </summary>
+            <param name="alpha">The smoothing constant</param>
+            <param name="interval">The expected tick interval</param>
+            <param name="intervalUnit">The time unit of the tick interval</param>
+        </member>
+        <member name="M:SerilogMetrics.EWMA.Update(System.Int64)">
+            <summary>
+             Update the moving average with a new value.
+            </summary>
+            <param name="n"></param>
+        </member>
+        <member name="M:SerilogMetrics.EWMA.Tick">
+            <summary>
+            Mark the passage of time and decay the current rate accordingly.
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.EWMA.Rate(SerilogMetrics.TimeUnit)">
+            <summary>
+            Returns the rate in the given units of time.
+            </summary>
+        </member>
+        <member name="T:SerilogMetrics.TimeUnitExtensions">
+            <summary>
+            Provides enum methods for timing values
+            </summary>
+        </member>
+        <member name="M:SerilogMetrics.TimeUnitExtensions.Convert(SerilogMetrics.TimeUnit,System.Int64,SerilogMetrics.TimeUnit)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="duration"></param>
+            <param name="target"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SerilogMetrics.TimeUnitExtensions.ToNanos(SerilogMetrics.TimeUnit,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="interval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SerilogMetrics.TimeUnitExtensions.ToMicros(SerilogMetrics.TimeUnit,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="interval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SerilogMetrics.TimeUnitExtensions.ToMillis(SerilogMetrics.TimeUnit,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="interval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SerilogMetrics.TimeUnitExtensions.ToSeconds(SerilogMetrics.TimeUnit,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="interval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SerilogMetrics.TimeUnitExtensions.ToMinutes(SerilogMetrics.TimeUnit,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="interval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SerilogMetrics.TimeUnitExtensions.ToHours(SerilogMetrics.TimeUnit,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="interval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SerilogMetrics.TimeUnitExtensions.ToDays(SerilogMetrics.TimeUnit,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="interval"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
