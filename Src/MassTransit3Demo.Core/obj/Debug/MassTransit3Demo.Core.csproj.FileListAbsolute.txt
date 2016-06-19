@@ -30,3 +30,10 @@ D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\SerilogMetrics.xm
 D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\Serilog.Sinks.Seq.dll
 D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\Serilog.Sinks.Seq.pdb
 D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\Serilog.Sinks.Seq.xml
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\MassTransit3Demo.Core.dll.config
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\Automatonymous.dll
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\MassTransit.AutomatonymousIntegration.dll
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\Taskell.dll
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\Automatonymous.xml
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\MassTransit.AutomatonymousIntegration.xml
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\bin\Debug\Taskell.xml

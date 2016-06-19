@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Automatonymous.MassTransitIntegration</name>
+    </assembly>
+    <members>
+        <member name="M:Automatonymous.RepositoryConfigurators.StateMachineEventCorrelationConfigurator`2.RetryLimit(System.Int32)">
+            <summary>
+            Specify the number of automatic retries to perform using the RetryLater
+            mechanism (which moves the message to the end of the queue) before deferring
+            retries to the built-in MassTransit mechanism.
+            </summary>
+            <param name="retryLimit"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Automatonymous.RepositoryBuilders.StateMachineEventCorrelation`1">
+            <summary>
+            A correlation for a data event to the state machine where the default correlation
+            id is not present or not desired.
+            </summary>
+            <typeparam name="TInstance">The state machine instance type</typeparam>
+        </member>
+        <member name="M:Automatonymous.RepositoryBuilders.StateMachineEventCorrelation`1.GetCorrelationExpression``1">
+            <summary>
+            The correlation expression which can be used to query some storage medium
+            </summary>
+            <typeparam name="TMessage"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Automatonymous.RepositoryBuilders.StateMachineEventCorrelation`1.GetCorrelationId``1(``0)">
+            <summary>
+            Returns the correlationId that should be used for creating a new saga instance from
+            this message
+            </summary>
+            <typeparam name="TMessage"></typeparam>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Automatonymous.RepositoryBuilders.StateMachineEventCorrelation`1.Event">
+            <summary>
+            The event for this correlation type
+            </summary>
+        </member>
+        <member name="P:Automatonymous.RepositoryBuilders.StateMachineEventCorrelation`1.RetryLimit">
+            <summary>
+            Returns the retry limit for the event to support the retry later behavior
+            for synchronizing correlated events
+            </summary>
+        </member>
+        <member name="M:Automatonymous.RetryLaterExtensions.RetryLater``3(Automatonymous.Binders.EventActivityBinder{``0,``1})">
+            <summary>
+            Resends the message to the input queue so that it can be received again later.
+            </summary>
+            <typeparam name="TInstance"></typeparam>
+            <typeparam name="TData"></typeparam>
+            <typeparam name="TMessage"></typeparam>
+            <param name="source"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Automatonymous.StateMachineSagaRepository`1.TryGetCorrelationExpressionForEvent``1(Automatonymous.Event{``0},System.Linq.Expressions.Expression{System.Func{`0,``0,System.Boolean}}@,System.Func{``0,System.Guid}@)">
+            <summary>
+            Requests a correlation expression and identifier selector for the
+            event type.
+            </summary>
+            <typeparam name="TData"></typeparam>
+            <param name="event">The event requested</param>
+            <param name="correlationExpression">The expression to correlate a message to a state machine instance</param>
+            <param name="correlationIdSelector">The function to return a correlation id from the message</param>
+            <returns>True if a correlation is specified, otherwise false</returns>
+        </member>
+        <member name="M:Automatonymous.StateMachineSagaRepository`1.GetCompletedExpression">
+            <summary>
+            Returns the completed expression for the state machine, so that completed
+            instances can be removed from the repository.
+            </summary>
+            <returns>The completed expression</returns>
+        </member>
+    </members>
+</doc>

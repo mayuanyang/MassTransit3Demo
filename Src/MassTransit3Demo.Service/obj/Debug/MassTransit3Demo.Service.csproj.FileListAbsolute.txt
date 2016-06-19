@@ -34,3 +34,7 @@ D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Service\bin\Debug\Serilog.FullNe
 D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Service\bin\Debug\Serilog.FullNetFx.xml
 D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Service\bin\Debug\Serilog.Sinks.Seq.pdb
 D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Service\bin\Debug\Serilog.Sinks.Seq.xml
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Service\bin\Debug\MassTransit.AutomatonymousIntegration.dll
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Service\bin\Debug\Automatonymous.dll
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Service\bin\Debug\MassTransit.AutomatonymousIntegration.xml
+D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Service\bin\Debug\Automatonymous.xml

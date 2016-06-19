@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Taskell</name>
+    </assembly>
+    <members>
+        <member name="M:Taskell.Compensation.Handled">
+            <summary>
+            Mark the exception as handled, preventing further compensation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Taskell.Compensation.Task(System.Threading.Tasks.Task)">
+            <summary>
+            Return a Task in response to the exception
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Taskell.Compensation.Throw``1(``0)">
+            <summary>
+            Throw the specified exception instead of the exception that caused the compensation
+            </summary>
+            <param name="ex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Taskell.Compensation.Throw">
+            <summary>
+            Throw the exception that caused the compensation, continuing the compensation flow
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Taskell.Compensation.Exception">
+            <summary>
+            The exception that triggered the compensation
+            </summary>
+        </member>
+        <member name="T:Taskell.Composer">
+            <summary>
+            A Composer is add executions, compensations, and other functions to a Task. By default, executions
+            run synchronously for maximum performance and are only deferred to a Task when necessary or specified.
+            </summary>
+        </member>
+        <member name="M:Taskell.Composer.Execute(System.Action,System.Boolean)">
+            <summary>
+            Adds a continuation to the plan
+            </summary>
+            <param name="continuation"></param>
+            <param name="runSynchronously"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Taskell.Composer.Execute(System.Func{System.Threading.Tasks.Task},System.Boolean)">
+            <summary>
+            Adds a task continuation to the plan. If the Task is not truly asynchronous, it can be
+            invoked synchronously retaining maximum performance.
+            </summary>
+            <param name="continuationTask"></param>
+            <param name="runSynchronously"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Taskell.Composer.Compensate(System.Func{Taskell.Compensation,Taskell.CompensationResult})">
+            <summary>
+            Adds a compensating task to the plan, which will be invoked if an exception occurs
+            </summary>
+            <param name="compensation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Taskell.Composer.Finally(System.Action{System.Threading.Tasks.TaskStatus},System.Boolean)">
+            <summary>
+            Adds a continuation that is always run, regardless of a successful or exceptional condition
+            </summary>
+            <param name="continuation"></param>
+            <param name="runSynchronously"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Taskell.Composer.Delay(System.Int32)">
+            <summary>
+            Adds a delay to the execution
+            </summary>
+            <param name="dueTime">The delay period, in milliseconds</param>
+            <returns></returns>
+        </member>
+        <member name="M:Taskell.Composer.Completed">
+            <summary>
+            Adds a successful completion of the execution to the plan
+            </summary>
+        </member>
+        <member name="M:Taskell.Composer.Failed``1(``0)">
+            <summary>
+            Fails the composition, invoking any compensations
+            </summary>
+            <param name="exception"></param>
+        </member>
+        <member name="P:Taskell.Composer.CancellationToken">
+            <summary>
+            The CancellationToken for this composition
+            </summary>
+        </member>
+        <member name="M:Taskell.ComposerExtensions.ComposeCompleted(Taskell.Composer)">
+            <summary>
+            Compose a completed Task that can be added to an existing composition
+            </summary>
+            <returns>A completed Task</returns>
+        </member>
+        <member name="M:Taskell.FinallyExtensions.Finally(Taskell.Composer,System.Action,System.Boolean)">
+            <summary>
+            Adds a continuation that is always run, regardless of a successful or exceptional condition
+            </summary>
+            <param name="composer"></param>
+            <param name="continuation"></param>
+            <param name="runSynchronously"></param>
+        </member>
+        <member name="T:Taskell.TaskComposer`1">
+            <summary>
+            Builds a chain of tasks that should run synchronously on the building thread until
+            an asynchronous operation is requested, in which case it switches the chain to 
+            asynchronous.
+            </summary>
+            <typeparam name="T">The payload type of the task chain</typeparam>
+        </member>
+        <member name="M:Taskell.TaskUtil.Then(System.Threading.Tasks.Task,System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+            Executes a task after the previous task is completed, taking the fast track if it is already completed
+            otherwise deferring to async execution
+            </summary>
+            <param name="task"></param>
+            <param name="continuationTask"></param>
+            <param name="cancellationToken"></param>
+            <param name="runSynchronously"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

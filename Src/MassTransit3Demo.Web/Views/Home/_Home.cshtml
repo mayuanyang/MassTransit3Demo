@@ -7,24 +7,39 @@
 <div class="row">
     <div class="col-md-6">
         <h2>Request/Response Queue</h2>
-        @using (Html.BeginForm("SendRequest", "Home", FormMethod.Post, new {@class = "form-inline" }))
+        @using (Html.BeginForm("SendRequest", "Home", FormMethod.Post, new {@class = "form-inline"}))
         {
-            @Html.TextBox("message", null, new { @class = "form-control" })
+            @Html.TextBox("message", null, new {@class = "form-control"})
             <button type="submit" class="btn btn-primary">Send Request</button>
         }
-        
-        @TempData["Content"] 
+
+        @TempData["Content"]
 
     </div>
 
     <div class="col-md-6">
         <h2>Command Queue</h2>
-        @using (Html.BeginForm("SendCommand", "Home", FormMethod.Post, new { @class = "form-inline" }))
+        @using (Html.BeginForm("SendCommand", "Home", FormMethod.Post, new {@class = "form-inline"}))
         {
-            @Html.TextBox("message", null, new { @class = "form-control" })
+            @Html.TextBox("message", null, new {@class = "form-control"})
             <button type="submit" class="btn btn-primary">Send Command</button>
         }
     </div>
+</div>
+<div>
+    <h2>Saga</h2>
+    <p>Correlation Id: @Guid.NewGuid()</p>
+    @using (Html.BeginForm("SendReversal", "Home", FormMethod.Post, new { @class = "form-inline" }))
+    {
+        @Html.TextBox("transactionId", null, new { @class = "form-control" })
+        <button type="submit" class="btn btn-primary">Send Reversal</button>
+    }
+
+    @using (Html.BeginForm("SendReversalAck", "Home", FormMethod.Post, new { @class = "form-inline" }))
+    {
+        @Html.TextBox("transactionId", null, new { @class = "form-control" })
+        <button type="submit" class="btn btn-primary">Send Reversal Ack</button>
+    }
 </div>
 
 <!-- /ko -->

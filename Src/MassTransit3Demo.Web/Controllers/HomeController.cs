@@ -1,9 +1,11 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using MassTransit;
 using MassTransit3Demo.Messages;
 using MassTransit3Demo.Messages.Commands;
+using MassTransit3Demo.Messages.Events;
 
 namespace MassTransit3Demo.Web.Controllers
 {
@@ -34,6 +36,18 @@ namespace MassTransit3Demo.Web.Controllers
         {
             await _bus.Publish(new PrintToConsoleCommand(message));
             return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> SendReversal(Guid transactionId)
+        {
+            await _bus.Publish(new TransactionReversedEvent {TransactionId = transactionId});
+            return View("Index");
+        }
+
+        public async Task<ActionResult> SendReversalAck(Guid transactionId)
+        {
+            await _bus.Publish(new TransactionAcknowledgedEvent() { TransactionId = transactionId });
+            return View("Index");
         }
     }
 }

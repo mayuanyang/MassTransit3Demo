@@ -1,10 +1,13 @@
 ﻿using System;
 using Autofac;
+using Automatonymous;
 using MassTransit;
 using MassTransit.AutofacIntegration;
+using MassTransit.Saga;
 using MassTransit3Demo.Core.Consumers;
 using MassTransit3Demo.Core.MiddlewareExtensions.ExceptionLogger;
 using MassTransit3Demo.Core.MiddlewareExtensions.PerformanceLogger;
+using MassTransit3Demo.Core.Sagas.BankoffSaga;
 using MassTransit3Demo.Core.Settings;
 using Serilog;
 using Serilog.Events;
@@ -35,33 +38,33 @@ namespace MassTransit3Demo.Core
             builder.RegisterConsumers(typeof(MassTransitModule).Assembly).AsSelf().AsImplementedInterfaces();
 
             builder.RegisterGeneric(typeof(AutofacConsumerFactory<>)).WithParameter(new NamedParameter("name", "message")).As(typeof(IConsumerFactory<>));
-            
+
             builder.Register<IBusControl>(context =>
             {
                 var username = context.Resolve<QueueUserNameSetting>();
                 var password = context.Resolve<QueuePasswordSetting>();
-              var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
-                    {
-                        var uri = context.Resolve<RabbitMqBaseUriSetting>();
-                        cfg.Host(new Uri(uri), x =>
-                        {
-                            x.Username(username);
-                            x.Password(password);
-                        });
-                        if (_isReceiveEndPoint)
-                        {
-                            ConfigureEndPoints(cfg, context);
-                        }
-                        else
-                        {
-                            cfg.UseExceptionLogger(context.Resolve<ILogger>());
-                        }
+                var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
+                      {
+                          var uri = context.Resolve<RabbitMqBaseUriSetting>();
+                          cfg.Host(new Uri(uri), x =>
+                          {
+                              x.Username(username);
+                              x.Password(password);
+                          });
+                          if (_isReceiveEndPoint)
+                          {
+                              ConfigureEndPoints(cfg, context);
+                          }
+                          else
+                          {
+                              cfg.UseExceptionLogger(context.Resolve<ILogger>());
+                          }
 
 
-                    });
+                      });
 
-                    busControl.Start();
-                    return busControl;
+                busControl.Start();
+                return busControl;
             })
                 .SingleInstance()
                 .As<IBusControl>()
@@ -81,13 +84,17 @@ namespace MassTransit3Demo.Core
             var requestQueuePostfix = context.Resolve<RequestResponseQueueNamePostfixSetting>();
             var generalQueuePostfix = context.Resolve<GeneralQueueNamePostfixSetting>();
 
+            var reversalSagaStateMachine = new ReversalSagaStateMachine();
+
+            var sagaRepository = new Lazy<ISagaRepository<ReversalSaga>>(() => new InMemorySagaRepository<ReversalSaga>());
+
             // The general queue
             cfg.ReceiveEndpoint(baseQueueName + "_" + generalQueuePostfix, ep =>
             {
                 ep.Consumer(context.Resolve<IConsumerFactory<PrintToConsoleCommandConsumer>>());
                 ep.UsePerformanceLogger(context.Resolve<ILogger>());
                 ep.UseExceptionLogger(context.Resolve<ILogger>());
-                
+                ep.StateMachineSaga(reversalSagaStateMachine, sagaRepository.Value);
 
             });
 
@@ -95,13 +102,13 @@ namespace MassTransit3Demo.Core
             cfg.ReceiveEndpoint(baseQueueName + "_" + requestQueuePostfix, ep =>
             {
                 ep.Consumer(context.Resolve<IConsumerFactory<SimpleRequestConsumer>>());
-                
+
                 ep.UsePerformanceLogger(context.Resolve<ILogger>());
                 ep.UseExceptionLogger(context.Resolve<ILogger>());
-                
+
             });
 
-            
+
         }
     }
 }

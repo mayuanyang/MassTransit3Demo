@@ -1,0 +1,138 @@
+﻿2016-06-19 11:47:01.116 +10:00 [Debug] Beginning operation bf6bf044-fba3-471b-8795-97147c6be31f: "Time for handling message"
+2016-06-19 11:47:01.373 +10:00 [Debug] Completed operation bf6bf044-fba3-471b-8795-97147c6be31f: "Time for handling message" in 00:00:00.2147278 (214 ms)
+2016-06-19 11:47:33.987 +10:00 [Debug] Beginning operation 757d4790-9bde-4a43-9ffb-3b734f692451: "Time for handling message"
+2016-06-19 11:47:34.112 +10:00 [Error] An exception occurred: MassTransit3Demo.Core.Sagas.BankoffSaga.ReversalSaga(8704b418-c313-4a3c-9f6e-db35f1e86929) Saga exception on receipt of MassTransit3Demo.Messages.Events.TransactionReversedEvent: Not accepted in state WaitingForAck
+Automatonymous.NotAcceptedStateMachineException: MassTransit3Demo.Core.Sagas.BankoffSaga.ReversalSaga(8704b418-c313-4a3c-9f6e-db35f1e86929) Saga exception on receipt of MassTransit3Demo.Messages.Events.TransactionReversedEvent: Not accepted in state WaitingForAck ---> Automatonymous.UnhandledEventException: The TransactionReversed event is not handled during the WaitingForAck state for the ReversalSagaStateMachine state machine
+   at Automatonymous.AutomatonymousStateMachine`1.DefaultUnhandledEventCallback(UnhandledEventContext`1 context)
+   at Automatonymous.AutomatonymousStateMachine`1.UnhandledEvent(EventContext`1 context, State state)
+   at Automatonymous.States.StateMachineState`1.<Automatonymous-State<TInstance>-Raise>d__27`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at Automatonymous.AutomatonymousStateMachine`1.<Automatonymous-StateMachine<TInstance>-RaiseEvent>d__21`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at Automatonymous.Pipeline.StateMachineSagaMessageFilter`2.<Send>d__5.MoveNext()
+   --- End of inner exception stack trace ---
+   at Automatonymous.Pipeline.StateMachineSagaMessageFilter`2.<Send>d__5.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at MassTransit.Saga.InMemorySagaRepository`1.<MassTransit-Saga-ISagaRepository<TSaga>-Send>d__7`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at MassTransit.Saga.Pipeline.Filters.CorrelatedSagaFilter`2.<MassTransit-Pipeline-IFilter<MassTransit-ConsumeContext<TMessage>>-Send>d__5.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at MassTransit.Saga.Pipeline.Filters.CorrelatedSagaFilter`2.<MassTransit-Pipeline-IFilter<MassTransit-ConsumeContext<TMessage>>-Send>d__5.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at MassTransit.Pipeline.Filters.TeeConsumeFilter`1.<>c__DisplayClass7_0.<<Send>b__0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at MassTransit.Pipeline.Filters.TeeConsumeFilter`1.<Send>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at MassTransit.Pipeline.Filters.MessageConsumeFilter`1.<MassTransit-Pipeline-IFilter<MassTransit-ConsumeContext>-Send>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at MassTransit.Pipeline.Filters.MessageConsumeFilter`1.<MassTransit-Pipeline-IFilter<MassTransit-ConsumeContext>-Send>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at MassTransit3Demo.Core.MiddlewareExtensions.ExceptionLogger.ExceptionLoggerFilter`1.<Send>d__6.MoveNext() in D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\MiddlewareExtensions\ExceptionLogger\ExceptionLoggerFilter.cs:line 40
+2016-06-19 11:47:34.237 +10:00 [Debug] Completed operation 757d4790-9bde-4a43-9ffb-3b734f692451: "Time for handling message" in 00:00:00.2568915 (256 ms)
+2016-06-19 11:49:40.211 +10:00 [Debug] Beginning operation 83143fcf-2f26-4d12-aed7-6323ff8636d3: "Time for handling message"
+2016-06-19 11:49:46.385 +10:00 [Debug] Completed operation 83143fcf-2f26-4d12-aed7-6323ff8636d3: "Time for handling message" in 00:00:06.1506468 (6150 ms)
+2016-06-19 11:50:21.396 +10:00 [Debug] Beginning operation 729017c8-c8aa-42b1-bb71-803be2a353f2: "Time for handling message"
+2016-06-19 11:50:21.489 +10:00 [Error] An exception occurred: MassTransit3Demo.Core.Sagas.BankoffSaga.ReversalSaga(8704b418-c313-4a3c-9f6e-db35f1e86929) Saga exception on receipt of MassTransit3Demo.Messages.Events.TransactionReversedEvent: Not accepted in state WaitingForAck
+Automatonymous.NotAcceptedStateMachineException: MassTransit3Demo.Core.Sagas.BankoffSaga.ReversalSaga(8704b418-c313-4a3c-9f6e-db35f1e86929) Saga exception on receipt of MassTransit3Demo.Messages.Events.TransactionReversedEvent: Not accepted in state WaitingForAck ---> Automatonymous.UnhandledEventException: The TransactionReversed event is not handled during the WaitingForAck state for the ReversalSagaStateMachine state machine
+   at Automatonymous.AutomatonymousStateMachine`1.DefaultUnhandledEventCallback(UnhandledEventContext`1 context)
+   at Automatonymous.AutomatonymousStateMachine`1.UnhandledEvent(EventContext`1 context, State state)
+   at Automatonymous.States.StateMachineState`1.<Automatonymous-State<TInstance>-Raise>d__27`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at Automatonymous.AutomatonymousStateMachine`1.<Automatonymous-StateMachine<TInstance>-RaiseEvent>d__21`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at Automatonymous.Pipeline.StateMachineSagaMessageFilter`2.<Send>d__5.MoveNext()
+   --- End of inner exception stack trace ---
+   at Automatonymous.Pipeline.StateMachineSagaMessageFilter`2.<Send>d__5.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at MassTransit.Saga.InMemorySagaRepository`1.<MassTransit-Saga-ISagaRepository<TSaga>-Send>d__7`1.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at MassTransit.Saga.Pipeline.Filters.CorrelatedSagaFilter`2.<MassTransit-Pipeline-IFilter<MassTransit-ConsumeContext<TMessage>>-Send>d__5.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at MassTransit.Saga.Pipeline.Filters.CorrelatedSagaFilter`2.<MassTransit-Pipeline-IFilter<MassTransit-ConsumeContext<TMessage>>-Send>d__5.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at MassTransit.Pipeline.Filters.TeeConsumeFilter`1.<>c__DisplayClass7_0.<<Send>b__0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at MassTransit.Pipeline.Filters.TeeConsumeFilter`1.<Send>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter.GetResult()
+   at MassTransit.Pipeline.Filters.MessageConsumeFilter`1.<MassTransit-Pipeline-IFilter<MassTransit-ConsumeContext>-Send>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at MassTransit.Pipeline.Filters.MessageConsumeFilter`1.<MassTransit-Pipeline-IFilter<MassTransit-ConsumeContext>-Send>d__7.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
+   at MassTransit3Demo.Core.MiddlewareExtensions.ExceptionLogger.ExceptionLoggerFilter`1.<Send>d__6.MoveNext() in D:\GITHUB\MassTransit3Demo\Src\MassTransit3Demo.Core\MiddlewareExtensions\ExceptionLogger\ExceptionLoggerFilter.cs:line 40
+2016-06-19 11:50:21.568 +10:00 [Debug] Completed operation 729017c8-c8aa-42b1-bb71-803be2a353f2: "Time for handling message" in 00:00:00.1648851 (164 ms)
+2016-06-19 11:51:29.022 +10:00 [Debug] Beginning operation cf940485-3cc8-48ac-8ab6-28b1a025f709: "Time for handling message"
+2016-06-19 11:51:33.424 +10:00 [Debug] Completed operation cf940485-3cc8-48ac-8ab6-28b1a025f709: "Time for handling message" in 00:00:04.4051678 (4405 ms)
+2016-06-19 11:51:58.872 +10:00 [Debug] Beginning operation 6b2d56b4-9a87-4c6a-897f-cb69d783751f: "Time for handling message"
+2016-06-19 11:52:01.678 +10:00 [Debug] Completed operation 6b2d56b4-9a87-4c6a-897f-cb69d783751f: "Time for handling message" in 00:00:02.7939805 (2793 ms)
+2016-06-19 11:56:03.524 +10:00 [Debug] Beginning operation e1b81af5-f782-4f72-885b-09b027d9b66d: "Time for handling message"
+2016-06-19 11:56:03.716 +10:00 [Debug] Completed operation e1b81af5-f782-4f72-885b-09b027d9b66d: "Time for handling message" in 00:00:00.1552877 (155 ms)
+2016-06-19 11:56:24.584 +10:00 [Debug] Beginning operation 6269f0c2-85c8-4146-b973-b1df76344256: "Time for handling message"
+2016-06-19 11:56:24.601 +10:00 [Debug] Completed operation 6269f0c2-85c8-4146-b973-b1df76344256: "Time for handling message" in 00:00:00.0168752 (16 ms)
+2016-06-19 11:59:30.846 +10:00 [Debug] Beginning operation f3c49d7f-8b22-4842-b803-281944f274ec: "Time for handling message"
+2016-06-19 11:59:31.060 +10:00 [Debug] Completed operation f3c49d7f-8b22-4842-b803-281944f274ec: "Time for handling message" in 00:00:00.1852226 (185 ms)
+2016-06-19 11:59:32.585 +10:00 [Debug] Beginning operation 6b50dae9-33a1-48bb-8988-d79fa8b91200: "Time for handling message"
+2016-06-19 11:59:32.585 +10:00 [Debug] Completed operation 6b50dae9-33a1-48bb-8988-d79fa8b91200: "Time for handling message" in 00:00:00.0091197 (9 ms)
+2016-06-19 12:00:01.114 +10:00 [Debug] Beginning operation 4927efc6-dc16-43f9-abe0-528c1dcbb01f: "Time for handling message"
+2016-06-19 12:00:01.114 +10:00 [Debug] Completed operation 4927efc6-dc16-43f9-abe0-528c1dcbb01f: "Time for handling message" in 00:00:00.0008553 (0 ms)
+2016-06-19 12:00:05.826 +10:00 [Debug] Beginning operation f850101e-b565-40f7-acc2-abe7f0e0d752: "Time for handling message"
+2016-06-19 12:00:05.826 +10:00 [Debug] Completed operation f850101e-b565-40f7-acc2-abe7f0e0d752: "Time for handling message" in 00:00:00.0008625 (0 ms)
+2016-06-19 12:00:36.098 +10:00 [Debug] Beginning operation 98a7e490-5099-4874-bc93-eba066288db7: "Time for handling message"
+2016-06-19 12:00:36.098 +10:00 [Debug] Completed operation 98a7e490-5099-4874-bc93-eba066288db7: "Time for handling message" in 00:00:00.0008707 (0 ms)
+2016-06-19 12:00:52.725 +10:00 [Debug] Beginning operation e175146b-6d16-4a7d-83fe-df270b4dfedc: "Time for handling message"
+2016-06-19 12:00:52.725 +10:00 [Debug] Completed operation e175146b-6d16-4a7d-83fe-df270b4dfedc: "Time for handling message" in 00:00:00.0007334 (0 ms)
+2016-06-19 12:01:05.317 +10:00 [Debug] Beginning operation c36fac0e-d7cc-46c1-82a2-b5eabffa582a: "Time for handling message"
+2016-06-19 12:01:05.333 +10:00 [Debug] Completed operation c36fac0e-d7cc-46c1-82a2-b5eabffa582a: "Time for handling message" in 00:00:00.0023213 (2 ms)
+2016-06-19 12:01:20.132 +10:00 [Debug] Beginning operation 20fd372c-1305-4ea8-be29-74cc11fefc54: "Time for handling message"
+2016-06-19 12:01:20.132 +10:00 [Debug] Completed operation 20fd372c-1305-4ea8-be29-74cc11fefc54: "Time for handling message" in 00:00:00.0020523 (2 ms)

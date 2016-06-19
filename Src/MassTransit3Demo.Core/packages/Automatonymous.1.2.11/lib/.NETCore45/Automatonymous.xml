@@ -1,0 +1,701 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Automatonymous</name>
+    </assembly>
+    <members>
+        <member name="M:Automatonymous.TransitionExtensions.TransitionTo``1(Automatonymous.Binders.EventActivityBinder{``0},Automatonymous.State)">
+            <summary>
+            Transition the state machine to the specified state
+            </summary>
+        </member>
+        <member name="M:Automatonymous.TransitionExtensions.TransitionTo``2(Automatonymous.Binders.EventActivityBinder{``0,``1},Automatonymous.State)">
+            <summary>
+            Transition the state machine to the specified state
+            </summary>
+        </member>
+        <member name="M:Automatonymous.TransitionExtensions.Finalize``2(Automatonymous.Binders.EventActivityBinder{``0,``1})">
+            <summary>
+            Transition the state machine to the Completed state
+            </summary>
+        </member>
+        <member name="M:Automatonymous.TransitionExtensions.Finalize``1(Automatonymous.Binders.EventActivityBinder{``0})">
+            <summary>
+            Transition the state machine to the Completed state
+            </summary>
+        </member>
+        <member name="T:Automatonymous.StateMachine`1">
+            <summary>
+            A defined state machine that operations against the specified instance
+            </summary>
+            <typeparam name="TInstance"></typeparam>
+        </member>
+        <member name="T:Automatonymous.StateMachine">
+            <summary>
+            A state machine definition
+            </summary>
+        </member>
+        <member name="M:Automatonymous.StateMachine.GetEvent(System.String)">
+            <summary>
+            Returns the event requested
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Automatonymous.StateMachine.GetState(System.String)">
+            <summary>
+            Returns the state requested
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Automatonymous.StateMachine.NextEvents(Automatonymous.State)">
+            <summary>
+            The valid events that can be raised during the specified state
+            </summary>
+            <param name="state">The state to query</param>
+            <returns>An enumeration of valid events</returns>
+        </member>
+        <member name="P:Automatonymous.StateMachine.Events">
+            <summary>
+            The events defined in the state machine
+            </summary>
+        </member>
+        <member name="P:Automatonymous.StateMachine.States">
+            <summary>
+            The states defined in the state machine
+            </summary>
+        </member>
+        <member name="P:Automatonymous.StateMachine.InstanceType">
+            <summary>
+            The instance type associated with the state machine
+            </summary>
+        </member>
+        <member name="P:Automatonymous.StateMachine.Initial">
+            <summary>
+            The initial state of a new state machine instance
+            </summary>
+        </member>
+        <member name="P:Automatonymous.StateMachine.Final">
+            <summary>
+            The final state of a state machine instance
+            </summary>
+        </member>
+        <member name="M:Automatonymous.StateMachine`1.GetState(System.String)">
+            <summary>
+            Returns the state requested bound to the instance
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Automatonymous.StateMachine`1.RaiseEvent(Taskell.Composer,`0,Automatonymous.Event)">
+            <summary>
+            Raise a simple event on the state machine instance asynchronously
+            </summary>
+            <param name="composer"></param>
+            <param name="instance">The state machine instance</param>
+            <param name="event">The event to raise</param>
+            <returns>Task for the instance once completed</returns>
+        </member>
+        <member name="M:Automatonymous.StateMachine`1.RaiseEvent``1(Taskell.Composer,`0,Automatonymous.Event{``0},``0)">
+            <summary>
+            Raise a data event on the state machine instance
+            </summary>
+            <param name="composer"></param>
+            <param name="instance">The state machine instance</param>
+            <param name="event">The event to raise</param>
+            <param name="value">The data value associated with the event</param>
+        </member>
+        <member name="M:Automatonymous.StateMachine`1.EventRaising(Automatonymous.Event)">
+            <summary>
+            Exposes a raised event to observers before it is raised on the instance
+            </summary>
+            <param name="event"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Automatonymous.StateMachine`1.EventRaised(Automatonymous.Event)">
+            <summary>
+            Exposes a raised event to observers after it is raised on the instance
+            </summary>
+            <param name="event"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Automatonymous.StateMachine`1.StateChanged">
+            <summary>
+            Exposes state change events to observers
+            </summary>
+        </member>
+        <member name="P:Automatonymous.StateMachine`1.InstanceStateAccessor">
+            <summary>
+            Exposes the current state on the given instance
+            </summary>
+        </member>
+        <member name="M:Automatonymous.AutomatonymousStateMachine`1.InstanceState(System.Linq.Expressions.Expression{System.Func{`0,Automatonymous.State}})">
+            <summary>
+            Declares what property holds the TInstance's state on the current instance of the state machine
+            </summary>
+            <param name="instanceStateProperty"></param>
+            <remarks>Setting the state accessor more than once will cause the property managed by the state machine to change each time.
+            Please note, the state machine can only manage one property at a given time per instance, 
+            and the best practice is to manage one property per machine.
+            </remarks>
+        </member>
+        <member name="M:Automatonymous.AutomatonymousStateMachine`1.Event(System.Linq.Expressions.Expression{System.Func{Automatonymous.Event}},System.Linq.Expressions.Expression{System.Func{`0,Automatonymous.CompositeEventStatus}},Automatonymous.Event[])">
+            <summary>
+            Adds a composite event to the state machine. A composite event is triggered when all
+            off the required events have been raised. Note that required events cannot be in the initial
+            state since it would cause extra instances of the state machine to be created
+            </summary>
+            <param name="propertyExpression">The composite event</param>
+            <param name="trackingPropertyExpression">The property in the instance used to track the state of the composite event</param>
+            <param name="events">The events that must be raised before the composite event is raised</param>
+        </member>
+        <member name="T:Automatonymous.Impl.DefaultInstanceStateAccessor`1">
+            <summary>
+            The default state accessor will attempt to find and use a single State property on the
+            instance type. If no State property is found, or more than one is found, an exception
+            will be thrown
+            </summary>
+        </member>
+        <member name="M:Automatonymous.StateMachineExtensions.RaiseEvent``2(``0,Taskell.Composer,``1,System.Func{``0,Automatonymous.Event})">
+            <summary>
+                Raise a simple event on the state machine
+            </summary>
+            <typeparam name="T">The state machine type</typeparam>
+            <typeparam name="TInstance">The instance type</typeparam>
+            <param name="stateMachine">The state machine</param>
+            <param name="composer"></param>
+            <param name="instance">The state machine instance</param>
+            <param name="eventSelector">Selector to the event on the state machine</param>
+        </member>
+        <member name="M:Automatonymous.StateMachineExtensions.RaiseEvent``3(``0,Taskell.Composer,``1,System.Func{``0,Automatonymous.Event{``2}},``2)">
+            <summary>
+                Raise a simple event on the state machine
+            </summary>
+            <typeparam name="T">The state machine type</typeparam>
+            <typeparam name="TInstance">The instance type</typeparam>
+            <typeparam name="TData"></typeparam>
+            <param name="stateMachine">The state machine</param>
+            <param name="composer"></param>
+            <param name="instance">The state machine instance</param>
+            <param name="eventSelector">Selector to the event on the state machine</param>
+            <param name="data"></param>
+        </member>
+        <member name="M:Automatonymous.StateMachineExtensions.RaiseEvent``2(``0,``1,System.Func{``0,Automatonymous.Event},System.Threading.CancellationToken)">
+            <summary>
+                Raise a simple event on the state machine
+            </summary>
+            <typeparam name="T">The state machine type</typeparam>
+            <typeparam name="TInstance">The instance type</typeparam>
+            <param name="stateMachine">The state machine</param>
+            <param name="instance">The state machine instance</param>
+            <param name="eventSelector">Selector to the event on the state machine</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Automatonymous.StateMachineExtensions.RaiseEvent``3(``0,``2,System.Func{``0,Automatonymous.Event{``1}},``1,System.Threading.CancellationToken)">
+            <summary>
+                Raise a simple event on the state machine
+            </summary>
+            <typeparam name="T">The state machine type</typeparam>
+            <typeparam name="TData">The data type of the event</typeparam>
+            <typeparam name="TInstance">The instance type</typeparam>
+            <param name="stateMachine">The state machine</param>
+            <param name="instance">The state machine instance</param>
+            <param name="eventSelector">Selector to the event on the state machine</param>
+            <param name="data">The data for the event</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Automatonymous.StateMachineExtensions.RaiseEvent``2(``0,``1,Automatonymous.Event,System.Threading.CancellationToken)">
+            <summary>
+                Raise a simple event on the state machine
+            </summary>
+            <typeparam name="T">The state machine type</typeparam>
+            <typeparam name="TInstance">The instance type</typeparam>
+            <param name="stateMachine">The state machine</param>
+            <param name="instance">The state machine instance</param>
+            <param name="event">Event on the state machine</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Automatonymous.StateMachineExtensions.RaiseEvent``2(Automatonymous.StateMachine{``1},``1,Automatonymous.Event{``0},``0,System.Threading.CancellationToken)">
+            <summary>
+                Raise a data event on the state machine
+            </summary>
+            <typeparam name="TData">The data type of the event</typeparam>
+            <typeparam name="TInstance">The instance type</typeparam>
+            <param name="stateMachine">The state machine</param>
+            <param name="instance">The state machine instance</param>
+            <param name="event"></param>
+            <param name="data">The data for the event</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Automatonymous.StateMachineExtensions.For``1(Automatonymous.StateMachine)">
+            <summary>
+                Returns an instance-specific version of the state machine (smart cast essentially)
+            </summary>
+            <typeparam name="TInstance">The instance type requested</typeparam>
+            <param name="stateMachine">The untyped state machine interface</param>
+            <returns>The typed static machine reference</returns>
+        </member>
+        <member name="M:Automatonymous.StateMachineExtensions.TransitionToState``1(Automatonymous.StateMachine{``0},Taskell.Composer,``0,Automatonymous.State)">
+            <summary>
+                Transition a state machine instance to a specific state, producing any events related
+                to the transaction such as leaving the previous state and entering the target state
+            </summary>
+            <typeparam name="TInstance">The state instance type</typeparam>
+            <param name="stateMachine">The state machine</param>
+            <param name="composer"></param>
+            <param name="instance">The state instance</param>
+            <param name="state">The target state</param>
+        </member>
+        <member name="M:Automatonymous.StateMachineExtensions.TransitionToState``1(Automatonymous.StateMachine{``0},``0,Automatonymous.State,System.Threading.CancellationToken)">
+            <summary>
+                Transition a state machine instance to a specific state, producing any events related
+                to the transaction such as leaving the previous state and entering the target state
+            </summary>
+            <typeparam name="TInstance">The state instance type</typeparam>
+            <param name="stateMachine">The state machine</param>
+            <param name="instance">The state instance</param>
+            <param name="state">The target state</param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Automatonymous.StateMachineExtensions.TransitionToState``1(Taskell.Composer,``0,Automatonymous.StateAccessor{``0},Automatonymous.State{``0})">
+            <summary>
+                Transition a state machine instance to a specific state, producing any events related
+                to the transaction such as leaving the previous state and entering the target state
+            </summary>
+            <typeparam name="TInstance">The state instance type</typeparam>
+            <param name="composer"></param>
+            <param name="instance">The state instance</param>
+            <param name="accessor"></param>
+            <param name="state">The target state</param>
+        </member>
+        <member name="P:Automatonymous.State.Leave">
+            <summary>
+            Raised when the state is about to be left
+            </summary>
+        </member>
+        <member name="P:Automatonymous.State.BeforeEnter">
+            <summary>
+            Raised just before the state is about to change to a new state
+            </summary>
+        </member>
+        <member name="P:Automatonymous.State.AfterLeave">
+            <summary>
+            Raised just after the state has been left and a new state is selected
+            </summary>
+        </member>
+        <member name="T:Internals.Algorithms.Implementations.NodeList`2">
+            <summary>
+            Maintains a list of nodes for a given set of instances of T
+            </summary>
+            <typeparam name="T">The type encapsulated in the node</typeparam>
+            <typeparam name="TNode">The type of node contained in the list</typeparam>
+        </member>
+        <member name="M:Internals.Algorithms.Implementations.NodeList`2.Index(`0)">
+            <summary>
+            Retrieve the index for a given key
+            </summary>
+            <param name="key">The key</param>
+            <returns>The index</returns>
+        </member>
+        <member name="P:Internals.Algorithms.Implementations.NodeList`2.Item(`0)">
+            <summary>
+            Retrieves the node for the given key
+            </summary>
+            <param name="key">The key</param>
+            <returns>The unique node that relates to the specified key</returns>
+        </member>
+        <member name="T:Internals.Algorithms.Implementations.NodeTable`1">
+            <summary>
+            Maintains an index of nodes so that regular ints can be used to execute algorithms
+            against objects with int-compare speed vs. .Equals() speed
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Internals.Algorithms.Implementations.NodeTable`1.Item(`0)">
+            <summary>
+            Returns the index for the specified key, which can be any type that supports
+            equality comparison
+            </summary>
+            <param name="key">The key to retrieve</param>
+            <returns>The index that uniquely relates to the specified key</returns>
+        </member>
+        <member name="T:Internals.Caching.Cache`2">
+            <summary>
+            A cache implementation that extends the capability of most dictionary style classes to
+            have a more complete set of methods commonly used in a dictionary scenario.
+            </summary>
+            <typeparam name="TKey">The key type of the cache</typeparam>
+            <typeparam name="TValue">The value type of the cache</typeparam>
+        </member>
+        <member name="T:Internals.Caching.ReadCache`2">
+            <summary>
+            A read-only view of a cache. Methods that are able to modify the cache contents are not
+            available in this reduced interface. Methods on this interface will NOT invoke a missing
+            item provider.
+            </summary>
+            <typeparam name="TKey"></typeparam>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="M:Internals.Caching.ReadCache`2.Has(`0)">
+            <summary>
+            Checks if the key exists in the cache
+            </summary>
+            <param name="key">The key to check</param>
+            <returns>True if the key exists, otherwise false</returns>
+        </member>
+        <member name="M:Internals.Caching.ReadCache`2.HasValue(`1)">
+            <summary>
+            Checks if a value exists in the cache
+            </summary>
+            <param name="value">The value to check</param>
+            <returns>True if the value exists, otherwise false</returns>
+        </member>
+        <member name="M:Internals.Caching.ReadCache`2.Each(System.Action{`1})">
+            <summary>
+            Calls the specified callback with each value in the cache
+            </summary>
+            <param name="callback">A callback that accepts the value for each item in the cache</param>
+        </member>
+        <member name="M:Internals.Caching.ReadCache`2.Each(System.Action{`0,`1})">
+            <summary>
+            Calls the specified callback with each item in the cache
+            </summary>
+            <param name="callback">A callback that accepts the key and value for each item in the cache</param>
+        </member>
+        <member name="M:Internals.Caching.ReadCache`2.Exists(System.Predicate{`1})">
+            <summary>
+            Uses a predicate to scan the cache for a matching value
+            </summary>
+            <param name="predicate">The predicate to run against each value</param>
+            <returns>True if a matching value exists, otherwise false</returns>
+        </member>
+        <member name="M:Internals.Caching.ReadCache`2.Find(System.Predicate{`1},`1@)">
+            <summary>
+            Uses a predicate to scan the cache for a matching value
+            </summary>
+            <param name="predicate">The predicate to run against each value</param>
+            <param name="result">The matching value</param>
+            <returns>True if a matching value was found, otherwise false</returns>
+        </member>
+        <member name="M:Internals.Caching.ReadCache`2.GetAllKeys">
+            <summary>
+            Gets all keys that are stored in the cache
+            </summary>
+            <returns>An array of every key in the dictionary</returns>
+        </member>
+        <member name="M:Internals.Caching.ReadCache`2.GetAll">
+            <summary>
+            Gets all values that are stored in the cache
+            </summary>
+            <returns>An array of every value in the dictionary</returns>
+        </member>
+        <member name="P:Internals.Caching.ReadCache`2.Count">
+            <summary>
+            The number of items in the cache
+            </summary>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.Get(`0)">
+            <summary>
+            Get the value for the specified key
+            </summary>
+            <param name="key">The key referencing the value in the cache</param>
+            <returns>The matching value if the key exists in the cache, otherwise an exception is thrown</returns>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.Get(`0,Internals.Caching.MissingValueProvider{`0,`1})">
+            <summary>
+            Get the value for the specified key, overriding the default missing value provider
+            </summary>
+            <param name="key">The key referencing the value in the cache</param>
+            <param name="missingValueProvider">An overloaded missing value provider to create the value if it is not found in the cache</param>
+            <returns>The matching value if the key exists in the cache, otherwise an exception is thrown</returns>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.GetValue(`0,`1)">
+            <summary>
+            Get a value for the specified key, if not found returns the specified default value
+            </summary>
+            <param name="key">The key referencing the value in the cache</param>
+            <param name="defaultValue">The default value to return if the key is not found in the cache</param>
+            <returns>The matching value if it exists in the cache, otherwise the default value</returns>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.GetValue(`0,System.Func{`1})">
+            <summary>
+            Get a value for the specified key, if not found returns the specified default value
+            </summary>
+            <param name="key">The key referencing the value in the cache</param>
+            <param name="defaultValueProvider">The default value to return if the key is not found in the cache</param>
+            <returns>The matching value if it exists in the cache, otherwise the default value</returns>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.TryGetValue(`0,`1@)">
+            <summary>
+            Gets a value for the specified key if it exists
+            </summary>
+            <param name="key">The key referencing the value in the cache</param>
+            <param name="value">The value if it exists in the cache, otherwise the default value</param>
+            <returns>True if the item was in the cache, otherwise false</returns>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.Add(`0,`1)">
+            <summary>
+            Adds a value to the cache using the specified key. If the key already exists in the cache, an exception is thrown.
+            </summary>
+            <param name="key">The key referencing the value</param>
+            <param name="value">The value</param>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.AddValue(`1)">
+            <summary>
+            Adds a value to the cache using the KeySelector to extract the key from the value. If the key already exists
+            in the cache, an exception is thrown.
+            </summary>
+            <param name="value">The value</param>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.Remove(`0)">
+            <summary>
+            Remove an existing value from the cache
+            </summary>
+            <param name="key">The key referencing the value</param>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.RemoveValue(`1)">
+            <summary>
+            Remove an existing value from the cache, using the KeySelector to extract the key to find the value
+            </summary>
+            <param name="value">The value to remove</param>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.Clear">
+            <summary>
+            Removes all items from the cache
+            </summary>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.Fill(System.Collections.Generic.IEnumerable{`1})">
+            <summary>
+            Fills the cache from a list of values, using the KeySelector to extract the key for each value.
+            </summary>
+            <param name="values"></param>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.WithValue(`0,System.Action{`1})">
+            <summary>
+            Calls the callback with the value matching the specified key
+            </summary>
+            <param name="key">The key referencing the value</param>
+            <param name="callback">The callback to call</param>
+            <returns>True if the value exists and the callback was called</returns>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.WithValue``1(`0,System.Func{`1,``0},``0)">
+            <summary>
+            Calls the function with the value matching the specified key, returning the result of that function
+            </summary>
+            <typeparam name="TResult">The result type of the function</typeparam>
+            <param name="key">The key references the value</param>
+            <param name="callback">The function to call</param>
+            <param name="defaultValue">The default return value if the item does not exist in the cache</param>
+            <returns>The return value of the function, or the defaultValue specified if the item does not exist in the cache</returns>
+        </member>
+        <member name="M:Internals.Caching.Cache`2.WithValue``1(`0,System.Func{`1,``0},System.Func{`0,``0})">
+            <summary>
+            Calls the function with the value matching the specified key, returning the result of that function
+            </summary>
+            <typeparam name="TResult">The result type of the function</typeparam>
+            <param name="key">The key references the value</param>
+            <param name="callback">The function to call</param>
+            <param name="defaultValue">The default return value if the item does not exist in the cache</param>
+            <returns>The return value of the function, or the defaultValue specified if the item does not exist in the cache</returns>
+        </member>
+        <member name="P:Internals.Caching.Cache`2.MissingValueProvider">
+            <summary>
+            Sets the missing value provider used by the cache to create requested values that do not exist in the cache
+            </summary>
+        </member>
+        <member name="P:Internals.Caching.Cache`2.ValueAddedCallback">
+            <summary>
+            Sets the callback that is called when a new value is added to the cache
+            </summary>
+        </member>
+        <member name="P:Internals.Caching.Cache`2.ValueRemovedCallback">
+            <summary>
+            Sets the callback that is called when a value is removed or replaced from the cache
+            </summary>
+        </member>
+        <member name="P:Internals.Caching.Cache`2.DuplicateValueAdded">
+            <summary>
+            Sets the callback that is called when a duplicate value is added to the cache
+            </summary>
+        </member>
+        <member name="P:Internals.Caching.Cache`2.KeySelector">
+            <summary>
+            Specifies a selector that returns the key from a value which is used when a value is added to the cache
+            </summary>
+        </member>
+        <member name="P:Internals.Caching.Cache`2.Item(`0)">
+            <summary>
+            References a value in the cache, returning a newly created or existing value for the specified key, and
+            adding a new or replacing an existing value in the cache
+            </summary>
+            <param name="key">The key references the value</param>
+            <returns>The value from the cache</returns>
+        </member>
+        <member name="M:Internals.Caching.GenericTypeCache`1.#ctor(System.Type)">
+            <summary>
+            Constructs a cache for the specified generic type
+            </summary>
+            <param name="genericType">The generic type to close</param>
+        </member>
+        <member name="M:Internals.Caching.GenericTypeCache`1.#ctor(System.Type,Internals.Caching.MissingValueProvider{System.Type,`0})">
+            <summary>
+            Constructs a cache for the specified generic type.
+            </summary>
+            <param name="genericType">The generic type to close</param>
+            <param name="missingValueProvider">The implementation provider, which must close the generic type with the passed type</param>
+        </member>
+        <member name="M:Internals.Extensions.ExpressionExtensions.GetMemberName``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Gets the name of the member specified
+            </summary>
+            <typeparam name="T">The type referenced</typeparam>
+            <typeparam name="TMember">The type of the member referenced</typeparam>
+            <param name="expression">The expression referencing the member</param>
+            <returns>The name of the member referenced by the expression</returns>
+        </member>
+        <member name="M:Internals.Extensions.ExpressionExtensions.GetMemberName``1(System.Linq.Expressions.Expression{System.Action{``0}})">
+            <summary>
+            Gets the name of the member specified
+            </summary>
+            <typeparam name="T">The type referenced</typeparam>
+            <param name="expression">The expression referencing the member</param>
+            <returns>The name of the member referenced by the expression</returns>
+        </member>
+        <member name="M:Internals.Extensions.TypeExtensions.IsConcreteType(System.Type)">
+            <summary>
+            Determines if a type is neither abstract nor an interface and can be constructed.
+            </summary>
+            <param name="type">The type to check</param>
+            <returns>True if the type can be constructed, otherwise false.</returns>
+        </member>
+        <member name="M:Internals.Extensions.TypeExtensions.IsConcreteAndAssignableTo(System.Type,System.Type)">
+            <summary>
+            Determines if a type can be constructed, and if it can, additionally determines
+            if the type can be assigned to the specified type.
+            </summary>
+            <param name="type">The type to evaluate</param>
+            <param name="assignableType">The type to which the subject type should be checked against</param>
+            <returns>True if the type is concrete and can be assigned to the assignableType, otherwise false.</returns>
+        </member>
+        <member name="M:Internals.Extensions.TypeExtensions.IsConcreteAndAssignableTo``1(System.Type)">
+            <summary>
+            Determines if a type can be constructed, and if it can, additionally determines
+            if the type can be assigned to the specified type.
+            </summary>
+            <param name="type">The type to evaluate</param>
+            <typeparam name="T">The type to which the subject type should be checked against</typeparam>
+            <returns>True if the type is concrete and can be assigned to the assignableType, otherwise false.</returns>
+        </member>
+        <member name="M:Internals.Extensions.TypeExtensions.IsOpenGeneric(System.Type)">
+            <summary>
+            Determines if the type is an open generic with at least one unspecified generic argument
+            </summary>
+            <param name="type">The type</param>
+            <returns>True if the type is an open generic</returns>
+        </member>
+        <member name="T:Internals.Reflection.ComponentFactory">
+            <summary>
+            Provides registration and resolution of components within an AppDomain. The registrations are static,
+            but done to provide a global style of registration without the management of a full container.
+            </summary>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Add``1(System.Func{``0})">
+            <summary>
+            Add a type with a factory method for creating the type
+            </summary>
+            <typeparam name="T">The type to add</typeparam>
+            <param name="factoryMethod">The factory method for the class that implements the added type</param>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Add``2">
+            <summary>
+            Adds a type with an implementation that has no dependencies
+            </summary>
+            <typeparam name="T">The type to add</typeparam>
+            <typeparam name="TImplementation">The implementation type to add</typeparam>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Add``1(System.Type)">
+            <summary>
+            Add a type with a implementation type that may have dependencies
+            </summary>
+            <typeparam name="T">The type to add</typeparam>
+            <param name="implementationType">The implementation type to add</param>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Add``1">
+            <summary>
+            Add a concrete type with no dependencies
+            </summary>
+            <typeparam name="T">The type to add</typeparam>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Add``1(``0)">
+            <summary>
+            Add a type with a single instance implementing the type
+            </summary>
+            <typeparam name="T">The type to add</typeparam>
+            <param name="instance">The instance of a class implementing the added type</param>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Add(System.Type)">
+            <summary>
+            Add a type with the same implementation type, automatically resolving any dependencies
+            </summary>
+            <param name="addType">The type to add</param>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Add(System.Type,System.Type)">
+            <summary>
+            Add a type with an implementation type selecting the greediest constructor on the implementation
+            that can be satisfied by the registered types
+            </summary>
+            <param name="addType">The type to add</param>
+            <param name="implementationType">The implementation type to add</param>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Add(System.Type,System.Type,System.Type[])">
+            <summary>
+            Add a type with a specific list of dependency types matching an existing constructor
+            on the implementation type
+            </summary>
+            <param name="addType"> </param>
+            <param name="implementationType"> </param>
+            <param name="dependencies"></param>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Get``1">
+            <summary>
+            Resolve the specified type
+            </summary>
+            <typeparam name="T">The type to resolve</typeparam>
+            <returns>An implementation of the specified type</returns>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Remove``1">
+            <summary>
+            Remove the type
+            </summary>
+            <typeparam name="T">The type to remove</typeparam>
+        </member>
+        <member name="M:Internals.Reflection.ComponentFactory.Remove(System.Type)">
+            <summary>
+            Remove the type
+            </summary>
+            <param name="type">The type to remove</param>
+        </member>
+        <member name="T:Internals.Reflection.Factory`1">
+            <summary>
+            Type factory
+            </summary>
+            <typeparam name="T">The factory component type</typeparam>
+        </member>
+        <member name="P:Internals.Reflection.Factory`1.Get">
+            <summary>
+            The factory method to get an instance of the component type
+            </summary>
+        </member>
+        <member name="M:Internals.Tasks.TaskUtil.Then(System.Threading.Tasks.Task,System.Func{System.Threading.Tasks.Task},System.Threading.CancellationToken,System.Boolean)">
+            <summary>
+                Creates a task that executes after the input task
+            </summary>
+            <param name="task"></param>
+            <param name="continuationTask"></param>
+            <param name="cancellationToken"></param>
+            <param name="runSynchronously"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
