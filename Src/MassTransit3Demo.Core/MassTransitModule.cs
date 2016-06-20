@@ -7,6 +7,7 @@ using MassTransit.Saga;
 using MassTransit3Demo.Core.Consumers;
 using MassTransit3Demo.Core.MiddlewareExtensions.ExceptionLogger;
 using MassTransit3Demo.Core.MiddlewareExtensions.PerformanceLogger;
+using MassTransit3Demo.Core.MiddlewareExtensions.SayHello;
 using MassTransit3Demo.Core.Sagas.BankoffSaga;
 using MassTransit3Demo.Core.Settings;
 using Serilog;
@@ -45,6 +46,7 @@ namespace MassTransit3Demo.Core
                 var password = context.Resolve<QueuePasswordSetting>();
                 var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
                       {
+                          cfg.UseSayHello();
                           var uri = context.Resolve<RabbitMqBaseUriSetting>();
                           cfg.Host(new Uri(uri), x =>
                           {
@@ -63,6 +65,7 @@ namespace MassTransit3Demo.Core
 
                       });
 
+                
                 busControl.Start();
                 return busControl;
             })
@@ -102,7 +105,6 @@ namespace MassTransit3Demo.Core
             cfg.ReceiveEndpoint(baseQueueName + "_" + requestQueuePostfix, ep =>
             {
                 ep.Consumer(context.Resolve<IConsumerFactory<SimpleRequestConsumer>>());
-
                 ep.UsePerformanceLogger(context.Resolve<ILogger>());
                 ep.UseExceptionLogger(context.Resolve<ILogger>());
 

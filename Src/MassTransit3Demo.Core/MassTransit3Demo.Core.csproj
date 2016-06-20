@@ -110,6 +110,9 @@
     <Compile Include="MiddlewareExtensions\PerformanceLogger\PerformanceLoggerExtension.cs" />
     <Compile Include="MiddlewareExtensions\PerformanceLogger\PerformanceLoggerFilter.cs" />
     <Compile Include="MiddlewareExtensions\PerformanceLogger\PerformanceLoggerPipeSpecification.cs" />
+    <Compile Include="MiddlewareExtensions\SayHello\SayHelloExtension.cs" />
+    <Compile Include="MiddlewareExtensions\SayHello\SayHelloLoggerFilter.cs" />
+    <Compile Include="MiddlewareExtensions\SayHello\SayHelloPipeSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestClient.cs" />
     <Compile Include="Sagas\BankoffSaga\ReversalSaga.cs" />
