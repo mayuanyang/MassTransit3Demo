@@ -49,5 +49,17 @@ namespace MassTransit3Demo.Web.Controllers
             await _bus.Publish(new TransactionAcknowledgedEvent() { TransactionId = transactionId });
             return View("Index");
         }
+
+        public async Task<ActionResult> SendV1()
+        {
+            await _bus.Publish(new OrderPlacedEvent() {OrderAmount = 100});
+            return View("Index");
+        }
+
+        public async Task<ActionResult> SendV2()
+        {
+            await _bus.Publish(new OrderPlacedEventV2() { OrderAmount = 100, Postage = 20});
+            return View("Index");
+        }
     }
 }

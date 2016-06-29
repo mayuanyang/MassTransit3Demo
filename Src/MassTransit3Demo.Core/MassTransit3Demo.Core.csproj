@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consumers\OrderPlacedEventConsumer.cs" />
     <Compile Include="Consumers\PrintToConsoleCommandConsumer.cs" />
     <Compile Include="Consumers\SimpleRequestConsumer.cs" />
     <Compile Include="CoreAssembly.cs" />

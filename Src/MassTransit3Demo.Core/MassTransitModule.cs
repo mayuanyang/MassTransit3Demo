@@ -95,6 +95,7 @@ namespace MassTransit3Demo.Core
             cfg.ReceiveEndpoint(baseQueueName + "_" + generalQueuePostfix, ep =>
             {
                 ep.Consumer(context.Resolve<IConsumerFactory<PrintToConsoleCommandConsumer>>());
+                ep.Consumer(context.Resolve<IConsumerFactory<OrderPlacedEventConsumer>>());
                 ep.UsePerformanceLogger(context.Resolve<ILogger>());
                 ep.UseExceptionLogger(context.Resolve<ILogger>());
                 ep.StateMachineSaga(reversalSagaStateMachine, sagaRepository.Value);
