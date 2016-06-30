@@ -47,6 +47,9 @@ namespace MassTransit3Demo.Core
                 var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
                       {
                           cfg.UseSayHello();
+
+                          // This will defer send/ publish until after the consumer completes successfully
+                          cfg.UseInMemoryOutbox();
                           var uri = context.Resolve<RabbitMqBaseUriSetting>();
                           cfg.Host(new Uri(uri), x =>
                           {
@@ -62,9 +65,9 @@ namespace MassTransit3Demo.Core
                               cfg.UseExceptionLogger(context.Resolve<ILogger>());
                           }
 
-
+                          
                       });
-
+                
                 
                 busControl.Start();
                 return busControl;
@@ -99,7 +102,7 @@ namespace MassTransit3Demo.Core
                 ep.UsePerformanceLogger(context.Resolve<ILogger>());
                 ep.UseExceptionLogger(context.Resolve<ILogger>());
                 ep.StateMachineSaga(reversalSagaStateMachine, sagaRepository.Value);
-
+                
             });
 
             // The conversation queue
