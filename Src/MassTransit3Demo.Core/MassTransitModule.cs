@@ -7,6 +7,7 @@ using MassTransit.Saga;
 using MassTransit3Demo.Core.Consumers;
 using MassTransit3Demo.Core.MiddlewareExtensions.ExceptionLogger;
 using MassTransit3Demo.Core.MiddlewareExtensions.PerformanceLogger;
+using MassTransit3Demo.Core.MiddlewareExtensions.PublishMessageSink;
 using MassTransit3Demo.Core.MiddlewareExtensions.SayHello;
 using MassTransit3Demo.Core.Sagas.BankoffSaga;
 using MassTransit3Demo.Core.Settings;
@@ -48,8 +49,6 @@ namespace MassTransit3Demo.Core
                       {
                           cfg.UseSayHello();
 
-                          // This will defer send/ publish until after the consumer completes successfully
-                          cfg.UseInMemoryOutbox();
                           var uri = context.Resolve<RabbitMqBaseUriSetting>();
                           cfg.Host(new Uri(uri), x =>
                           {
@@ -65,7 +64,20 @@ namespace MassTransit3Demo.Core
                               cfg.UseExceptionLogger(context.Resolve<ILogger>());
                           }
 
+                       
+                          //cfg.ConfigurePublish(x =>
+                          //{
+                          //    x.UseSendExecute(y =>
+                          //    {
+                          //        Console.WriteLine(y.ConversationId);
+                          //    });
+
+                          //    x.UsePublishMessageSink<SendContext>();
+
+                          //});
+
                           
+
                       });
                 
                 
@@ -97,12 +109,21 @@ namespace MassTransit3Demo.Core
             // The general queue
             cfg.ReceiveEndpoint(baseQueueName + "_" + generalQueuePostfix, ep =>
             {
+                // // This will defer send/ publish until after the consumer completes successfully in this end point 
+                ep.UseInMemoryOutbox();
+
                 ep.Consumer(context.Resolve<IConsumerFactory<PrintToConsoleCommandConsumer>>());
                 ep.Consumer(context.Resolve<IConsumerFactory<OrderPlacedEventConsumer>>());
+                ep.Consumer(context.Resolve<IConsumerFactory<MessageIsPrintedEventConsumer>>());
                 ep.UsePerformanceLogger(context.Resolve<ILogger>());
                 ep.UseExceptionLogger(context.Resolve<ILogger>());
                 ep.StateMachineSaga(reversalSagaStateMachine, sagaRepository.Value);
-                
+
+                ep.ConfigurePublish(x =>
+                {
+                   x.UsePublishMessageSink<SendContext>();
+                });
+
             });
 
             // The conversation queue
@@ -111,7 +132,8 @@ namespace MassTransit3Demo.Core
                 ep.Consumer(context.Resolve<IConsumerFactory<SimpleRequestConsumer>>());
                 ep.UsePerformanceLogger(context.Resolve<ILogger>());
                 ep.UseExceptionLogger(context.Resolve<ILogger>());
-
+                // This will defer send/ publish until after the consumer completes successfully
+                ep.UseInMemoryOutbox();
             });
 
 

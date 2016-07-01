@@ -44,6 +44,7 @@
     <Compile Include="Conversation\SimpleResonse.cs" />
     <Compile Include="Events\IOrderPlacedEventV2.cs" />
     <Compile Include="Events\IOrderPlacedEvent.cs" />
+    <Compile Include="Events\MessageIsPrintedEvent.cs" />
     <Compile Include="Events\OrderPlacedEventV2.cs" />
     <Compile Include="Events\OrderPlacedEvent.cs" />
     <Compile Include="Events\TransactionAcknowledgedEvent.cs" />

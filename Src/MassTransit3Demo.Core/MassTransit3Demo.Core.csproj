@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consumers\MessageIsPrintedEventConsumer.cs" />
     <Compile Include="Consumers\OrderPlacedEventConsumer.cs" />
     <Compile Include="Consumers\PrintToConsoleCommandConsumer.cs" />
     <Compile Include="Consumers\SimpleRequestConsumer.cs" />
@@ -111,13 +112,16 @@
     <Compile Include="MiddlewareExtensions\PerformanceLogger\PerformanceLoggerExtension.cs" />
     <Compile Include="MiddlewareExtensions\PerformanceLogger\PerformanceLoggerFilter.cs" />
     <Compile Include="MiddlewareExtensions\PerformanceLogger\PerformanceLoggerPipeSpecification.cs" />
+    <Compile Include="MiddlewareExtensions\PublishMessageSink\PublishMessageSinkExtension.cs" />
+    <Compile Include="MiddlewareExtensions\PublishMessageSink\PublishMessageSinkFilter.cs" />
+    <Compile Include="MiddlewareExtensions\PublishMessageSink\PublishMessageSinkPipeSpecification.cs" />
     <Compile Include="MiddlewareExtensions\SayHello\SayHelloExtension.cs" />
     <Compile Include="MiddlewareExtensions\SayHello\SayHelloLoggerFilter.cs" />
     <Compile Include="MiddlewareExtensions\SayHello\SayHelloPipeSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestClient.cs" />
     <Compile Include="Sagas\BankoffSaga\ReversalSaga.cs" />
-    <Compile Include="Sagas\BankoffSaga\BankoffSagaStateMachine.cs" />
+    <Compile Include="Sagas\BankoffSaga\ReversalSagaStateMachine.cs" />
     <Compile Include="Settings\BaseQueueNameSetting.cs" />
     <Compile Include="Settings\GeneralQueueNamePostfixSetting.cs" />
     <Compile Include="Settings\QueuePasswordSetting.cs" />
@@ -136,6 +140,7 @@
       <Name>MassTransit3Demo.Messages</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

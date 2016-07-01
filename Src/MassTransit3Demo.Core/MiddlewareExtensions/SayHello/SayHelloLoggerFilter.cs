@@ -19,6 +19,7 @@ namespace MassTransit3Demo.Core.MiddlewareExtensions.SayHello
 
         public async Task Send(T context, IPipe<T> next)
         {
+            Console.WriteLine();
             Console.WriteLine($"Middleware Started: {typeof(SayHelloExtension).Name}");
             await next.Send(context);
             Console.WriteLine($"Middleware Finished: {typeof(SayHelloExtension).Name}");
