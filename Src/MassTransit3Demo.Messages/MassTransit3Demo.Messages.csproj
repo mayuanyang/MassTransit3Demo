@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Commands\PrintToConsoleCommand.cs" />
     <Compile Include="Conversation\SimpleResonse.cs" />
+    <Compile Include="Events\IEvent.cs" />
     <Compile Include="Events\IOrderPlacedEventV2.cs" />
     <Compile Include="Events\IOrderPlacedEvent.cs" />
     <Compile Include="Events\MessageIsPrintedEvent.cs" />

@@ -12,7 +12,7 @@ namespace MassTransit3Demo.Core.Consumers
         public async Task Consume(ConsumeContext<PrintToConsoleCommand> context)
         {
             Console.WriteLine(context.Message.Text);
-            await context.Publish(new MessageIsPrintedEvent());
+            await context.Publish(new MessageIsPrintedEvent(context.Message.Text));
  
         }
 

@@ -63,21 +63,7 @@ namespace MassTransit3Demo.Core
                           {
                               cfg.UseExceptionLogger(context.Resolve<ILogger>());
                           }
-
-                       
-                          //cfg.ConfigurePublish(x =>
-                          //{
-                          //    x.UseSendExecute(y =>
-                          //    {
-                          //        Console.WriteLine(y.ConversationId);
-                          //    });
-
-                          //    x.UsePublishMessageSink<SendContext>();
-
-                          //});
-
                           
-
                       });
                 
                 
