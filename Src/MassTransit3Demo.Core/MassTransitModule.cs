@@ -9,7 +9,7 @@ using MassTransit3Demo.Core.MiddlewareExtensions.ExceptionLogger;
 using MassTransit3Demo.Core.MiddlewareExtensions.PerformanceLogger;
 using MassTransit3Demo.Core.MiddlewareExtensions.PublishMessageSink;
 using MassTransit3Demo.Core.MiddlewareExtensions.SayHello;
-using MassTransit3Demo.Core.Sagas.BankoffSaga;
+using MassTransit3Demo.Core.Sagas.ReversalSaga;
 using MassTransit3Demo.Core.Settings;
 using Serilog;
 using Serilog.Events;
@@ -27,7 +27,7 @@ namespace MassTransit3Demo.Core
 
         protected override void Load(ContainerBuilder builder)
         {
-
+            // Register Serilog and get it log to Seq and file
             builder.Register<ILogger>((c, p) => new LoggerConfiguration()
             .ReadFrom.AppSettings()
                 .WriteTo.RollingFile(
@@ -36,17 +36,21 @@ namespace MassTransit3Demo.Core
                 .CreateLogger())
                 .SingleInstance();
 
-
+            // Register all the consumers
             builder.RegisterConsumers(typeof(MassTransitModule).Assembly).AsSelf().AsImplementedInterfaces();
 
+            // Register the ConsumerFactory for each consumer, this will ensure each message will have its own nested lifetimescope
             builder.RegisterGeneric(typeof(AutofacConsumerFactory<>)).WithParameter(new NamedParameter("name", "message")).As(typeof(IConsumerFactory<>));
 
-            builder.Register<IBusControl>(context =>
+            // Register the bus
+            builder.Register(context =>
             {
                 var username = context.Resolve<QueueUserNameSetting>();
                 var password = context.Resolve<QueuePasswordSetting>();
+
                 var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
                       {
+                          // Add middleware to the pipeline between the transport and endpoint
                           cfg.UseSayHello();
 
                           var uri = context.Resolve<RabbitMqBaseUriSetting>();
@@ -55,13 +59,11 @@ namespace MassTransit3Demo.Core
                               x.Username(username);
                               x.Password(password);
                           });
+
+                          // A bus without a receive end point is a publish only bus
                           if (_isReceiveEndPoint)
                           {
                               ConfigureEndPoints(cfg, context);
-                          }
-                          else
-                          {
-                              cfg.UseExceptionLogger(context.Resolve<ILogger>());
                           }
                           
                       });
@@ -71,7 +73,7 @@ namespace MassTransit3Demo.Core
                 return busControl;
             })
                 .SingleInstance()
-                .As<IBusControl>()
+                .As<IBusControl>() // IBusControl let you start and stop the bus
                 .As<IBus>()
                 .AutoActivate();
 
@@ -79,6 +81,7 @@ namespace MassTransit3Demo.Core
         }
         private void RegisterMessageRequestClient(ContainerBuilder builder)
         {
+            // Request/Response
             builder.RegisterGeneric(typeof(RequestClient<,>)).AsSelf().AsImplementedInterfaces();
 
         }
@@ -92,14 +95,13 @@ namespace MassTransit3Demo.Core
 
             var sagaRepository = new Lazy<ISagaRepository<ReversalSaga>>(() => new InMemorySagaRepository<ReversalSaga>());
 
-            // The general queue
-            cfg.ReceiveEndpoint(baseQueueName + "_" + generalQueuePostfix, ep =>
+            // The general queue 1
+            cfg.ReceiveEndpoint($"{baseQueueName}_{generalQueuePostfix}_1", ep =>
             {
                 // // This will defer send/ publish until after the consumer completes successfully in this end point 
                 ep.UseInMemoryOutbox();
 
                 ep.Consumer(context.Resolve<IConsumerFactory<PrintToConsoleCommandConsumer>>());
-                ep.Consumer(context.Resolve<IConsumerFactory<OrderPlacedEventConsumer>>());
                 ep.Consumer(context.Resolve<IConsumerFactory<MessageIsPrintedEventConsumer>>());
                 ep.UsePerformanceLogger(context.Resolve<ILogger>());
                 ep.UseExceptionLogger(context.Resolve<ILogger>());
@@ -107,19 +109,35 @@ namespace MassTransit3Demo.Core
 
                 ep.ConfigurePublish(x =>
                 {
-                   x.UsePublishMessageSink<SendContext>();
+                   x.UseEventStore<SendContext>();
+                });
+
+            });
+
+            // The general queue 2
+            cfg.ReceiveEndpoint($"{baseQueueName}_{generalQueuePostfix}_2", ep =>
+            {
+                // // This will defer send/ publish until after the consumer completes successfully in this end point 
+                ep.UseInMemoryOutbox();
+
+                ep.Consumer(context.Resolve<IConsumerFactory<OrderPlacedEventConsumer>>());
+               
+                ep.ConfigurePublish(x =>
+                {
+                    x.UseEventStore<SendContext>();
                 });
 
             });
 
             // The conversation queue
-            cfg.ReceiveEndpoint(baseQueueName + "_" + requestQueuePostfix, ep =>
+            cfg.ReceiveEndpoint($"{baseQueueName}_{requestQueuePostfix}", ep =>
             {
+                // This will defer send/ publish until after the consumer completes successfully
+                ep.UseInMemoryOutbox();
                 ep.Consumer(context.Resolve<IConsumerFactory<SimpleRequestConsumer>>());
                 ep.UsePerformanceLogger(context.Resolve<ILogger>());
                 ep.UseExceptionLogger(context.Resolve<ILogger>());
-                // This will defer send/ publish until after the consumer completes successfully
-                ep.UseInMemoryOutbox();
+                
             });
 
 

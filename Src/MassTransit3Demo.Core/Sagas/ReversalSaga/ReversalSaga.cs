@@ -1,7 +1,7 @@
 ﻿using System;
 using Automatonymous;
 
-namespace MassTransit3Demo.Core.Sagas.BankoffSaga
+namespace MassTransit3Demo.Core.Sagas.ReversalSaga
 {
     public class ReversalSaga :
         SagaStateMachineInstance

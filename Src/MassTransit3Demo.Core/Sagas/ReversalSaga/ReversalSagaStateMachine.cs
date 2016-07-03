@@ -2,19 +2,21 @@
 using Automatonymous;
 using MassTransit3Demo.Messages.Events;
 
-namespace MassTransit3Demo.Core.Sagas.BankoffSaga
+namespace MassTransit3Demo.Core.Sagas.ReversalSaga
 {
     public class ReversalSagaStateMachine :
          MassTransitStateMachine<ReversalSaga>
     {
         public ReversalSagaStateMachine()
         {
+            // To tell the state machine the field that to hold the state
             InstanceState(x => x.CurrentState);
 
+            // Tell the state machine the event it listens to and the correlation Id being used
             Event(() => TransactionAcknowledged, x => x.CorrelateById(context => context.Message.TransactionId));
             Event(() => TransactionReversed, x => x.CorrelateById(context => context.Message.TransactionId));
 
-
+            // Define how state get changed base on event and what behavior should be triggered
             Initially(
                 When(TransactionReversed)
                     .Then(context =>
@@ -31,6 +33,7 @@ namespace MassTransit3Demo.Core.Sagas.BankoffSaga
                     .Finalize()
                 );
 
+            // Saga will be removed from the repo once it is finalized
             SetCompletedWhenFinalized();
         }
 
