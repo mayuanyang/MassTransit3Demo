@@ -100,13 +100,15 @@ namespace MassTransit3Demo.Core
             {
                 // // This will defer send/ publish until after the consumer completes successfully in this end point 
                 ep.UseInMemoryOutbox();
+                ep.UsePerformanceLogger(context.Resolve<ILogger>());
+                ep.UseExceptionLogger(context.Resolve<ILogger>());
+
+                ep.StateMachineSaga(reversalSagaStateMachine, sagaRepository.Value);
 
                 ep.Consumer(context.Resolve<IConsumerFactory<PrintToConsoleCommandConsumer>>());
                 ep.Consumer(context.Resolve<IConsumerFactory<MessageIsPrintedEventConsumer>>());
-                ep.UsePerformanceLogger(context.Resolve<ILogger>());
-                ep.UseExceptionLogger(context.Resolve<ILogger>());
-                ep.StateMachineSaga(reversalSagaStateMachine, sagaRepository.Value);
-
+                
+                // The publish pipeline
                 ep.ConfigurePublish(x =>
                 {
                    x.UseEventStore<SendContext>();
@@ -129,7 +131,7 @@ namespace MassTransit3Demo.Core
 
             });
 
-            // The conversation queue
+            // The conversation queue, request/response
             cfg.ReceiveEndpoint($"{baseQueueName}_{requestQueuePostfix}", ep =>
             {
                 // This will defer send/ publish until after the consumer completes successfully

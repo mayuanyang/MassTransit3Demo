@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\PrintToConsoleCommand.cs" />
+    <Compile Include="Commands\StartMigrationCommand.cs" />
     <Compile Include="Conversation\SimpleResonse.cs" />
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="Events\IOrderPlacedEventV2.cs" />
